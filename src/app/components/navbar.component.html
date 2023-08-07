@@ -1,0 +1,79 @@
+<!-- navbar if user is logged in -->
+<ng-container *ngIf="(isLoggedIn$ | async) as loggedIn; else loggedOut">
+
+      <div *ngIf="loggedIn" class="container-fluid">
+        
+        <nav class="navbar navbar-expand-lg navbar-light">
+    
+          <button class="navbar-toggler btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#navbarLoggedIn" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+        <a class="navbar-brand" [routerLink]="['/dashboard']">  
+          <span class="brand-text-1">Trade</span><span class="brand-text-2">SIMS</span>
+        </a>  
+    
+    
+        <div class="collapse navbar-collapse" id="navbarLoggedIn" [ngbCollapse]="isCollapsed">
+          <ul class="navbar-nav mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" style="color:white" [routerLink]="['/dashboard']">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color:white" [routerLink]="['/research']">Research</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" style="color:white" [routerLink]="['/trade']">Trade</a>
+            </li>
+
+            <li class="nav-item">
+             
+                <button class="btn btn-danger align-text-top" (click)="logout()" style="font-size: 16px;">Log Out</button>
+          
+            </li>
+
+          </ul>
+        </div>
+          
+          </nav>
+        </div>
+    
+    </ng-container>
+    
+    
+    
+    <!-- navbar if user is not logged in -->
+    <ng-template #loggedOut>
+    
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light">
+    
+          <button class="navbar-toggler btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#navbarNotLoggedIn" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    
+          <a class="navbar-brand" href="#">  
+            <span class="brand-text-1">Trade</span><span class="brand-text-2">SIMS</span>
+          </a>  
+    
+      
+        <div class="collapse navbar-collapse" id="navbarNotLoggedIn" [ngbCollapse]="isCollapsed">
+          <ul class="navbar-nav mt-2 mt-lg-0">
+
+            <li class="nav-item">
+              <a class="nav-link" style="color:white" [routerLink]="['/login']">Log In</a>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-danger align-text-top" [routerLink]="['/register']" style="font-size: 16px">Register</button>
+            </li>
+          </ul>
+        </div>
+      
+          </nav>
+        </div>
+      
+    
+</ng-template>
+    
+    
+    

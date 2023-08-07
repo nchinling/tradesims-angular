@@ -1,0 +1,81 @@
+<div class = "container">
+
+    <h2>Register an Account</h2> 
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="(errorMessage$ | async) as errorMessage" class="error-message">
+        <p>{{errorMessage}}</p>
+    </div>
+
+    <br>
+    <form [formGroup]="registerForm" (submit)="registerAccount()">
+        <table>
+            <tr>
+                <td>Name:&nbsp;&nbsp;</td>
+                <td>
+                    <input type="text" size="30" formControlName="name" placeholder="Name">
+                  <span *ngIf="invalidField('name')" class="invalid-field">
+                      Please enter a valid name (Min. of 5 chars).
+                  </span>
+                </td>
+                
+            </tr>
+            <br>
+            <tr>
+                <td>Username:&nbsp;&nbsp;</td>
+                <td>
+                    <input type="text" size="30" formControlName="username" placeholder="Username">
+                  <span *ngIf="invalidField('username')" class="invalid-field">
+                      Please enter a valid username (Min. of 4 chars).
+                  </span>
+                </td>
+              </tr>
+              <br>
+          
+            <tr>
+                <td>Password:&nbsp;&nbsp;</td>
+                <td>
+                  <div>
+                    <input type="password" size="30" formControlName="password" placeholder="Password">
+                  </div>
+                  <div>
+                    <span *ngIf="invalidField('password')" class="invalid-field">
+                      Please enter a valid password. Password should have a minimum of 8 characters, including at least 1 special character and 1 letter.
+                    </span>
+                  </div>
+                </td>
+            </tr>
+            <br>
+          <tr>
+            <td>Email:&nbsp;&nbsp;</td>
+            <td>
+                <input type="email" size="30" formControlName="email" placeholder="Email address">
+              <span *ngIf="invalidField('email')" class="invalid-field">
+                  Please enter a valid email address.
+              </span>
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td></td>
+            <td>
+              <button class="btn btn-danger" type="submit" [disabled]="registerForm.invalid">Submit</button>
+
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td></td>
+            <td><div *ngIf="isLoading" class="loader"></div></td>
+          </tr>
+        </table>
+      
+      </form>
+</div>
+
+<br>
+<br>
+

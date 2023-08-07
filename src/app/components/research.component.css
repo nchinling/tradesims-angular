@@ -1,0 +1,75 @@
+.row {
+    display: flex;
+    justify-content: space-between; 
+   
+  }
+  
+.box {
+flex: 1;
+font-family: "Arial Black", Arial, sans-serif;
+/* font-weight: bold; */
+color: white;
+padding: 10px;
+
+}
+
+
+.negative {
+background-color: red;
+}
+
+.positive {
+background-color: green;
+}
+
+.triangle {
+    color: white;
+}
+
+.stock-form{
+    padding: 10px;
+}
+
+.data-row td {
+    padding-left: 20px; 
+    padding-right: 30px; 
+}
+
+
+  
+
+  
+  .table-color, .table-color th, .table-color td {
+    border: 3px solid green; /* Set the border to be 1px solid blue */
+    padding: 8px; /* Add some padding to the table cells for better spacing */
+    background-color:#1d1160;
+    color:white;
+  }
+  
+.arrow-up{
+    color:green;
+}
+
+.arrow-down{
+    color:red;
+}
+
+.stock-item {
+    word-wrap: break-word;
+  }
+
+  .stock-list-container {
+    width: 100%;
+    max-width: 250px; 
+  }
+
+.stock-item:hover {
+    color: #1d1160;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modifylist-message {
+    margin-left: 10px;
+    color: grey;
+}
