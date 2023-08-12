@@ -34,7 +34,8 @@ const appRoutes: Routes = [
     AppComponent,
     MainComponent,
     LoginComponent, 
-    RegisterComponent, NavbarComponent, DashboardComponent, LeaderboardComponent, ResearchComponent, TradeComponent
+    RegisterComponent, NavbarComponent, DashboardComponent, 
+    LeaderboardComponent, ResearchComponent, TradeComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, FormsModule, HttpClientModule,

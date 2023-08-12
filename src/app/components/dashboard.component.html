@@ -1,3 +1,56 @@
-<p>dashboard works!</p>
+
+<div class="rolling-text-container" [class.show]="showText">
+    <!-- <p class="rolling-text">{{ rollingText }}</p> -->
+    <p class="rolling-text">{{ text }}</p>
+</div>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane active" id="nav-portfolio" role="tabpanel" aria-labelledby="nav-portfolio-tab">
+      <br>
+      <div *ngIf="(portfolioData$ | async) as portfolioData">
+      <div *ngIf="portfolioData.length > 0;else noPortfolioMessage" style="overflow-x:auto;">
+        <p>Portfolio (Cumulative)</p>
+      <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Stock Name</th><th>Exchange</th>
+              <th>Units</th><th>Avg Unit Price</th><th>Buy Total Price</th>
+              <th>Unit Current Price</th><th>Total Current Price</th>
+              <th>Total Return</th><th>% Change</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="portfolioData.length > 0">
+            <tr *ngFor="let data of portfolioData; let i = index">
+              <td>{{i+1}}</td>
+              <td class="stock-item" (click)="viewStock(data.symbol)">{{ data.stock_name }}</td><td>{{ data.exchange.toUpperCase()}}</td>
+              <td>{{ data.units }}</td><td>{{ data.buy_unit_price | number: '1.2-2' }}</td>
+              <td>{{data.currency}} {{ data.buy_total_price }} </td><td>{{ data.unit_current_price }}</td>
+              <td>{{ data.currency }} {{ data.total_current_price | number: '1.2-2' }}</td>
+              <td [ngClass]="{ 'red': data.total_return < 0, 
+              'green': data.total_return > 0 }">
+              <span class="arrow-up" *ngIf="data.total_return > 0"><strong>&#9650; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+              <span class="arrow-down" *ngIf="data.total_return < 0"><strong>&#9660; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+      
+            </td>
+    
+              <td [ngClass]="{ 'red': data.total_percentage_change < 0, 
+              'green': data.total_percentage_change > 0 }">
+              <span class="arrow-up" *ngIf="data.total_percentage_change > 0"><strong>&#9650; &nbsp;{{ data.total_percentage_change| number: '1.2-2'  }} %</strong></span>
+              <span class="arrow-down" *ngIf="data.total_percentage_change < 0"><strong>&#9660; &nbsp;{{ data.total_percentage_change | number: '1.2-2'  }} %</strong></span></td>
+            
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        </div>
+
+
+<br>
 <app-research></app-research>
-<app-trade></app-trade>
+<br>
+
+
+<ng-template #noPortfolioMessage>
+    <p>No trades created.</p>
+  </ng-template>

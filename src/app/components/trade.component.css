@@ -1,0 +1,139 @@
+.stock-item:hover {
+    color: lightgray;
+    cursor: pointer;
+}
+
+
+/* for watchlist */
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 7px;
+    text-align: center;
+  }
+  
+  th {
+    /* background-color: #f2f2f2; */
+    background-color: #1363DF; 
+    font-weight: bold;
+    color:white
+  }
+  
+  td {
+    border: 1px solid #ddd;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #ebebeb;
+  }
+
+  .red{
+    color:red
+  }
+
+  .green{
+    color:green
+  }
+
+
+
+/* for form */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  width: 120px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.form-row .form-field {
+  flex: 1;
+}
+
+.form-field {
+  margin-right: 10px; 
+}
+
+
+.form-row input,
+.form-row select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  padding: 8px 16px;
+  /* background-color: #007bff; */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.arrow-up{
+  color:green;
+}
+
+.arrow-down{
+  color:red;
+}
+
+.total-return {
+  font-size: 20px;
+  text-align: center;
+}
+
+
+@media (max-width: 480px) {
+.total-return {
+  display: block;
+}
+}
+
+.container-fluid {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-button {
+ 
+  background-color: transparent;
+  color: grey;
+  border: none
+
+}
+
+.custom-button:hover {
+  color: black;
+  font-weight: bold;
+}
+
+.invalid-field {
+  font-style: italic;
+  color: #1363DF; 
+}
+

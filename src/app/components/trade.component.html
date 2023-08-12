@@ -1,3 +1,188 @@
-<p>trade works!</p>
+<div class = "container-fluid">
+
+    <!-- <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div> -->
+
+    <div *ngIf="(errorMessage$ | async) as errorMessage" class="error-message">
+        <p>{{errorMessage}}</p>
+    </div>
+
+ <div class="container-fluid" *ngIf="(portfolioData$ | async) as portfolioData">
+  <p class="total-return" *ngIf="portfolioData.length > 0">
+    <strong>Total Return: 
+    <span [ngClass]="{ 'red': calculateTotalReturn(portfolioData) < 0, 'green': calculateTotalReturn(portfolioData) > 0 }">
+      <ng-container *ngIf="calculateTotalReturn(portfolioData) > 0">&#9650;</ng-container>
+      <ng-container *ngIf="calculateTotalReturn(portfolioData) < 0">&#9660;</ng-container>
+      {{ calculateTotalReturn(portfolioData) | number: '1.2-2' }} {{portfolioData[0].currency}}
+    </span></strong>
+
+    &nbsp;&nbsp;&nbsp; <strong>%Return: 
+    <span [ngClass]="{ 'red': calculateTotalPercentageReturn(portfolioData) < 0, 'green': calculateTotalPercentageReturn(portfolioData) > 0 }">
+      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) > 0">&#9650;</ng-container>
+      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) < 0">&#9660;</ng-container>
+      {{ calculateTotalPercentageReturn(portfolioData) | number: '1.2-2' }} %
+    </span> </strong>
+  </p>
+</div>
+
+<div *ngIf="(portfolioData$ | async) as portfolioData" style="overflow-x:auto;">
+<div *ngIf="portfolioData.length > 0">
+<h4>Trades</h4>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Stock Name</th><th>Exchange</th>
+          <th>Units</th><th>Avg Unit Price</th><th>Buy Total Price</th>
+          <th>Unit Current Price</th><th>Total Current Price</th>
+          <th>Total Return</th><th>% Change</th><th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of portfolioData; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{ data.stock_name }}</td><td>{{ data.exchange.toUpperCase()}}</td>
+          <td>{{ data.units }}</td><td>{{ data.buy_unit_price | number: '1.2-2' }}</td>
+          <td>{{data.currency}} {{ data.buy_total_price }} </td><td>{{ data.unit_current_price }}</td>
+          <td>{{ data.currency }} {{ data.total_current_price | number: '1.2-2' }}</td>
+          <td [ngClass]="{ 'red': data.total_return < 0, 
+          'green': data.total_return > 0 }">
+          <span class="arrow-up" *ngIf="data.total_return > 0"><strong>&#9650; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+          <span class="arrow-down" *ngIf="data.total_return < 0"><strong>&#9660; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+  
+        </td>
+
+          <td [ngClass]="{ 'red': data.total_percentage_change < 0, 
+          'green': data.total_percentage_change > 0 }">
+          <span class="arrow-up" *ngIf="data.total_percentage_change > 0"><strong>&#9650; &nbsp;{{ data.total_percentage_change| number: '1.2-2'  }} %</strong></span>
+          <span class="arrow-down" *ngIf="data.total_percentage_change < 0"><strong>&#9660; &nbsp;{{ data.total_percentage_change | number: '1.2-2'  }} %</strong></span>
+          </td>
+          <td><button class="fa-solid fa-xmark custom-button" type="button" (click)="removeFromCumulativePortfolio(i)"></button></td>
+        </tr>
+      </tbody>
+    </table> 
+  </div>
+  </div>
+
+  <br>
+<!--   
+    <h4>Buy</h4>
+    <form [formGroup]="portfolioForm" (submit)="processPortfolio()" class="form-container">
+      <div class="form-row">
+        <label for="exchange">Exchange:</label>
+        <div class="form-field">
+          <select formControlName="exchange" (change)="fetchExchange(exchange.value)" #exchange>
+            <option value="nyse" selected>NYSE</option>
+            <option value="nasdaq">NASDAQ</option>
+          </select>
+        </div>
+        <span *ngIf="invalidField('exchange')" class="invalid-field">
+          Please enter a market
+        </span>
+      </div>
+    
+      <div class="form-row">
+        <label for="stockName">Search:</label>
+        <div class="form-field">
+          <input type="text" size="30" formControlName="stockName" placeholder="Company Name" (keyup)="filtering(company.value)" #company>
+          <div *ngFor="let s of stockSearch$ | async">
+            <p (click)="getStockData(s.symbol)" class="stock-item">{{ s.name }} ({{ s.symbol }})</p>
+          </div>
+        </div>
+        <span *ngIf="invalidField('stockName')" class="invalid-field">
+          Please provide a stock name.
+        </span>
+      </div>
+    
+      <div class="form-row">
+        <label for="units">Units:</label>
+        <div class="form-field">
+          <input type="number" formControlName="units" steps="0.01">
+        </div>
+        <span *ngIf="invalidField('units')" class="invalid-field">
+          Please provide the number of units.
+        </span>
+      </div>
+    
+      <div class="form-row">
+        <label for="price">Price:</label>
+        <div class="form-field">
+          <input type="number" formControlName="price" steps="0.01">
+        </div>
+        <span *ngIf="invalidField('price')" class="invalid-field">
+          Please provide the unit purchase price.
+        </span>
+      </div>
+    
+      <div class="form-row">
+        <label for="fee">Fee:</label>
+        <div class="form-field">
+          <input type="number" formControlName="fee" steps="0.01">
+        </div>
+        <span *ngIf="invalidField('fee')" class="invalid-field">
+          Please provide the fee (min. 0)
+        </span>
+      </div>
+    
+      <div class="form-row">
+        <label for="date">Date:</label>
+        <div class="form-field">
+          <input type="date" formControlName="date" placeholder="Date of purchase">
+        </div>
+        <span *ngIf="invalidField('date')" class="invalid-field">
+          Please provide a valid date.
+        </span>
+        <button class="btn btn-primary" type="submit" [disabled]="portfolioForm.invalid">Submit</button>
+      </div>
+    </form> -->
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tradeModal">
+   Buy
+</button>
+  
+<!-- Modal -->
+<div class="modal fade" id="tradeModal" tabindex="-1" aria-labelledby="tradeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title" id="tradeModalLabel">Buy Form</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="tradeForm" (submit)="processTrade()" class="form-container">
+          <p>Stock Name: {{ stockName }}</p>
+          <p>Close Price: {{ closePrice }}</p>  
+        
+              <div class="form-row">
+                <label for="units">Units:</label>
+                <div class="form-field">
+                  <input type="number" formControlName="units" steps="0.01">
+                </div>
+                <span *ngIf="invalidField('units')" class="invalid-field">
+                  Please provide the number of units.
+                </span>
+              </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary" type="submit" [disabled]="tradeForm.invalid">Submit Trade</button>
+    </div>
+  </form>
+
+  </div>
+</div>
+</div>
+<!-- </div> -->
+
+<br>
+
+<ng-template #noPortfolioMessage>
+  <p>No trades yet.</p>
+</ng-template>
+
+  
 
 

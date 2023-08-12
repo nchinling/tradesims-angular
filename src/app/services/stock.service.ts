@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http"
 import { Injectable, inject } from "@angular/core"
 import { Subject, lastValueFrom, tap, map, firstValueFrom, debounceTime, Observable } from "rxjs"
-import { PortfolioData, Stock, StockInfo, StockProfile } from "../models"
+import { PortfolioData, Stock, StockInfo, StockProfile, TradesData } from "../models"
 
 const URL_API_TRADE_SERVER = 'http://localhost:8080/api'
 // const URL_API_TRADE_SERVER = '/api'
@@ -13,6 +13,7 @@ export class StockService {
 
     onStockRequest = new Subject<Stock>()
     onStockProfileRequest = new Subject<StockProfile>()
+    onTradesDataRequest = new Subject<TradesData>()
     onPortfolioDataRequest = new Subject<PortfolioData>()
 
     onStockSelection = new Subject<string>();
@@ -205,9 +206,39 @@ export class StockService {
 
     }
 
-    removeFromPortfolio(index: number, accountId: string){
-      
-      
+
+
+    getTradesData(account_id: string): Promise<TradesData[]> {
+      const queryParams = new HttpParams()
+        .set('account_id', account_id)
+    
+      return lastValueFrom(
+        this.http.get<TradesData[]>(`${URL_API_TRADE_SERVER}/user_trades`, { params: queryParams })
+          .pipe(
+            // tap(resp => this.onTradesDataRequest.next(resp)),
+            map(respArray => respArray.map(resp => ({
+              account_id: resp.account_id,
+              symbol: resp.symbol,
+              stock_name: resp.stock_name,
+              exchange: resp.exchange,
+              currency: resp.currency,
+              units: resp.units,
+              buy_unit_price: resp.buy_unit_price,
+              buy_total_price: resp.buy_total_price,
+              unit_current_price: resp.unit_current_price,
+              total_current_price: resp.total_current_price,
+              total_return: resp.total_return,
+              total_percentage_change: resp.total_percentage_change,
+              datetime: resp.datetime
+            })))
+          )
+      );
+    }
+    
+
+
+  removeFromPortfolio(index: number, accountId: string){
+    
       this.portfolioSymbol = this.portfolioSymbols[index]
       console.info('sending symbol to Stock server with ' + this.portfolioSymbol);
       const headers = new HttpHeaders().set('Content-Type', 'application/json');

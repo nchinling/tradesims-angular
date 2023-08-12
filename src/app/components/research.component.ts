@@ -109,10 +109,6 @@ export class ResearchComponent  {
 
   }
 
-
-  ngAfterViewInit():void{
-  }
-
   getStockData(symbol?: string) {
     let interval = '5min'
 

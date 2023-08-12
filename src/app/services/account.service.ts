@@ -120,7 +120,7 @@ login(email: string, password: string): Observable<LoginResponse> {
       .set("units", data.units)
       .set("price", data.price)
       .set("currency", data.currency)
-      .set("fee", data.fee)
+      // .set("fee", data.fee)
       .set("date", data.date.toString())
 
     console.info('account_id in savePortfolio: ' + this.account_id)

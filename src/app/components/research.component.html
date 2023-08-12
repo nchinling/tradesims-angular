@@ -2,7 +2,7 @@
 
       <div class="col-md-9">
         <div *ngIf="(stock$ | async) as stock">
-         
+         <td>
           <table class="table-color">
             <tr class="data-row">
               <td>Exchange</td><td>Symbol</td><td>Name</td><td>Open</td>
@@ -20,16 +20,22 @@
                 <span class="arrow-up" *ngIf="stock.percent_change > 0">&#9650; &nbsp;+{{ stock.percent_change }}%</span>
                 <span class="arrow-down" *ngIf="stock.percent_change < 0">&#9660; &nbsp;{{ stock.percent_change }}%</span>
               </td>
+
             </tr>
                
         </table>
+        </td>
+        <app-trade [stockName]="stock.name" [closePrice]="stock.close"
+            [stockSymbol]="stock.symbol" [stockExchange]="stock.exchange"
+            [currency]="stock.currency"></app-trade>
+        <!-- <app-trade [stockName]="stock.name" [closePrice]="stock.close"></app-trade> -->
+        <i>Data is accurate to 1 min.</i>
           
         </div>
       </div>
     </div>
- 
+    <br>
   
-
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">

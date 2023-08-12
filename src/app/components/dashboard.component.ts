@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnChanges, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { LoginResponse, PortfolioData, RegisterResponse } from '../models';
 import { AccountService } from '../services/account.service';
@@ -47,8 +48,20 @@ export class DashboardComponent implements OnInit{
 
   onStockRequest = new Subject<string>()
 
+  showText = false;
+  text = 'Dashboard';
+
+
 
  ngOnInit():void{
+
+  this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+    this.showText = true;
+    setTimeout(() => {
+      this.showText = false;
+    }, 4000); // Duration of the text animation in milliseconds
+  });
+  
     this.loginResponse$ = this.accountSvc.onLoginRequest
     this.registerResponse$ = this.accountSvc.onRegisterRequest
     this.errorMessage$ = this.accountSvc.onErrorMessage

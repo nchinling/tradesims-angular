@@ -57,3 +57,10 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - created log in page, navbar, main page
 - created Spring backend
 - created tradesims database
+
+9 Aug (Wed)
+- created Bootstrap modal form
+- created css animation
+
+11 Aug (Fri)
+- fixed modal buy form submission

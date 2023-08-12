@@ -51,6 +51,25 @@ export interface TradeResponse{
 }
 
 
+export interface TradesData{
+
+    account_id: string
+    symbol: string
+    stock_name: string
+    exchange: string
+    currency: string
+    units: number
+    buy_unit_price: number
+    buy_total_price: number
+    unit_current_price: number
+    total_current_price: number
+    total_return: number
+    total_percentage_change: number
+    datetime: Date
+
+}
+
+
 export interface PortfolioData{
 
     account_id: string
@@ -68,6 +87,7 @@ export interface PortfolioData{
     datetime: Date
 
 }
+
 
 
 export interface StockInfo {
