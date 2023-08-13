@@ -33,6 +33,8 @@ export interface TradeData{
     currency: string
     fee: number
     date: Date
+    accountId: string
+    username: string
 
 }
 

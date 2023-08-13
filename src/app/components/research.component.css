@@ -36,15 +36,13 @@ background-color: green;
 }
 
 
-  
-
-  
-  .table-color, .table-color th, .table-color td {
-    border: 3px solid green; /* Set the border to be 1px solid blue */
-    padding: 8px; /* Add some padding to the table cells for better spacing */
-    background-color:#1d1160;
-    color:white;
-  }
+.table-color, .table-color th, .table-color td {
+  border: 3px solid green; /* Set the border to be 1px solid blue */
+  padding: 8px; /* Add some padding to the table cells for better spacing */
+  background-color:black;
+  color:white;
+  width: 100%;
+}
   
 .arrow-up{
     color:green;
@@ -64,7 +62,8 @@ background-color: green;
   }
 
 .stock-item:hover {
-    color: #1d1160;
+    /* color: #1d1160; */
+    color: greenyellow;
     cursor: pointer;
     font-weight: bold;
 }
@@ -73,3 +72,4 @@ background-color: green;
     margin-left: 10px;
     color: grey;
 }
+

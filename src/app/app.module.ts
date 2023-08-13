@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'dashboard', component: DashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'research', component: ResearchComponent, title: 'Research', canActivate: [loginGuard] },
-  { path: 'trade', component: TradeComponent, title: 'Trade', canActivate: [loginGuard] },
+  // { path: 'trade', component: TradeComponent, title: 'Trade', canActivate: [loginGuard] },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 

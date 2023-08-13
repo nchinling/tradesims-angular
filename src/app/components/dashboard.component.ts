@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { LoginResponse, PortfolioData, RegisterResponse } from '../models';
+import { LoginResponse, PortfolioData, RegisterResponse, TradeResponse } from '../models';
 import { AccountService } from '../services/account.service';
 import { StockService } from '../services/stock.service';
 
@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit{
   stockSvc = inject(StockService)
   accountSvc = inject(AccountService)
   activatedRoute = inject(ActivatedRoute)
+  cdr = inject(ChangeDetectorRef)
   router = inject(Router)
   title = inject(Title)
   http=inject(HttpClient)
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit{
 
   loginResponse$!: Observable<LoginResponse>
   registerResponse$!: Observable<RegisterResponse>
+  tradeResponse$!: Observable<TradeResponse>
   errorMessage$!: Observable<string>
   username!: string
   status!: string
@@ -62,21 +64,33 @@ export class DashboardComponent implements OnInit{
     }, 4000); // Duration of the text animation in milliseconds
   });
   
-    this.loginResponse$ = this.accountSvc.onLoginRequest
+    
     this.registerResponse$ = this.accountSvc.onRegisterRequest
     this.errorMessage$ = this.accountSvc.onErrorMessage
+    this.tradeResponse$ = this.accountSvc.onSavePortfolioRequest
 
-    
+
         const queryParams = this.activatedRoute.snapshot.queryParams;
         
         this.status = queryParams['status'];
         this.timestamp = queryParams['timestamp'];
-        this.accountId = queryParams['account_id'];
-        this.username = queryParams['username'];
+        // this.accountId = queryParams['account_id'];
+        // this.username = queryParams['username'];
+
+        this.accountId = this.accountSvc.account_id;
+        this.username = this.accountSvc.username;
      
+        // to display total returns
+        this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)
+        console.info('this.symbols$ is' + this.portfolioSymbols$)
+        this.portfolioSymbols$.then((symbol: string[]) => {
+          console.info('Symbols:', symbol);
+          this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
+        }).catch((error) => {
+          console.error(error);
+        });
 
-        // this.title.setTitle('Account')
-
+        
         console.log('Status:', this.status);
         console.log('Timestamp:', this.timestamp);
         console.log('Account ID:', this.accountId);
@@ -106,7 +120,22 @@ export class DashboardComponent implements OnInit{
       this.symbols = this.stockSvc.symbols
       console.info('this.symbols in ngOnInit are:' + this.symbols)
 
+      this.tradeResponse$.pipe(
+        switchMap(() => {
+          return this.stockSvc.getPortfolioSymbols(this.accountId);
+        })
+      ).subscribe(
+        (symbol: string[]) => {
+          console.info('Symbols:', symbol);
+          this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+
 }
+
 
 viewStock(symbol:string){
 

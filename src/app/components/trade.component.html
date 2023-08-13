@@ -1,14 +1,10 @@
 <div class = "container-fluid">
 
-    <!-- <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div> -->
+   <div *ngIf="(errorMessage$ | async) as errorMessage" class="error-message">
+      <p>{{errorMessage}}</p>
+  </div>
 
-    <div *ngIf="(errorMessage$ | async) as errorMessage" class="error-message">
-        <p>{{errorMessage}}</p>
-    </div>
-
- <div class="container-fluid" *ngIf="(portfolioData$ | async) as portfolioData">
+ <!-- <div class="container-fluid" *ngIf="(portfolioData$ | async) as portfolioData">
   <p class="total-return" *ngIf="portfolioData.length > 0">
     <strong>Total Return: 
     <span [ngClass]="{ 'red': calculateTotalReturn(portfolioData) < 0, 'green': calculateTotalReturn(portfolioData) > 0 }">
@@ -24,9 +20,9 @@
       {{ calculateTotalPercentageReturn(portfolioData) | number: '1.2-2' }} %
     </span> </strong>
   </p>
-</div>
+</div> -->
 
-<div *ngIf="(portfolioData$ | async) as portfolioData" style="overflow-x:auto;">
+<!-- <div *ngIf="(portfolioData$ | async) as portfolioData" style="overflow-x:auto;">
 <div *ngIf="portfolioData.length > 0">
 <h4>Trades</h4>
 
@@ -65,79 +61,9 @@
   </div>
   </div>
 
-  <br>
-<!--   
-    <h4>Buy</h4>
-    <form [formGroup]="portfolioForm" (submit)="processPortfolio()" class="form-container">
-      <div class="form-row">
-        <label for="exchange">Exchange:</label>
-        <div class="form-field">
-          <select formControlName="exchange" (change)="fetchExchange(exchange.value)" #exchange>
-            <option value="nyse" selected>NYSE</option>
-            <option value="nasdaq">NASDAQ</option>
-          </select>
-        </div>
-        <span *ngIf="invalidField('exchange')" class="invalid-field">
-          Please enter a market
-        </span>
-      </div>
-    
-      <div class="form-row">
-        <label for="stockName">Search:</label>
-        <div class="form-field">
-          <input type="text" size="30" formControlName="stockName" placeholder="Company Name" (keyup)="filtering(company.value)" #company>
-          <div *ngFor="let s of stockSearch$ | async">
-            <p (click)="getStockData(s.symbol)" class="stock-item">{{ s.name }} ({{ s.symbol }})</p>
-          </div>
-        </div>
-        <span *ngIf="invalidField('stockName')" class="invalid-field">
-          Please provide a stock name.
-        </span>
-      </div>
-    
-      <div class="form-row">
-        <label for="units">Units:</label>
-        <div class="form-field">
-          <input type="number" formControlName="units" steps="0.01">
-        </div>
-        <span *ngIf="invalidField('units')" class="invalid-field">
-          Please provide the number of units.
-        </span>
-      </div>
-    
-      <div class="form-row">
-        <label for="price">Price:</label>
-        <div class="form-field">
-          <input type="number" formControlName="price" steps="0.01">
-        </div>
-        <span *ngIf="invalidField('price')" class="invalid-field">
-          Please provide the unit purchase price.
-        </span>
-      </div>
-    
-      <div class="form-row">
-        <label for="fee">Fee:</label>
-        <div class="form-field">
-          <input type="number" formControlName="fee" steps="0.01">
-        </div>
-        <span *ngIf="invalidField('fee')" class="invalid-field">
-          Please provide the fee (min. 0)
-        </span>
-      </div>
-    
-      <div class="form-row">
-        <label for="date">Date:</label>
-        <div class="form-field">
-          <input type="date" formControlName="date" placeholder="Date of purchase">
-        </div>
-        <span *ngIf="invalidField('date')" class="invalid-field">
-          Please provide a valid date.
-        </span>
-        <button class="btn btn-primary" type="submit" [disabled]="portfolioForm.invalid">Submit</button>
-      </div>
-    </form> -->
+  <br>  -->
 
-
+<br>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tradeModal">
    Buy
@@ -153,11 +79,11 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="tradeForm" (submit)="processTrade()" class="form-container">
-          <p>Stock Name: {{ stockName }}</p>
-          <p>Close Price: {{ closePrice }}</p>  
+          <p class="black-text">Stock Name: {{ stockName }}</p>
+          <p class="black-text">Close Price: {{ closePrice }}</p>  
         
               <div class="form-row">
-                <label for="units">Units:</label>
+                <label for="units" class="black-text">Units:</label>
                 <div class="form-field">
                   <input type="number" formControlName="units" steps="0.01">
                 </div>
@@ -168,14 +94,14 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button class="btn btn-primary" type="submit" [disabled]="tradeForm.invalid">Submit Trade</button>
+        <button class="btn btn-primary" type="submit" data-bs-dismiss="modal" [disabled]="tradeForm.invalid">Submit Trade</button>
     </div>
   </form>
 
   </div>
 </div>
 </div>
-<!-- </div> -->
+
 
 <br>
 

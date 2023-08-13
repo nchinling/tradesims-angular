@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
     this.login$.then((response) => {
       console.log('timestamp:', response.timestamp);
       console.log('username:', response.username);
+      console.log('account_id:', response.account_id);
       const queryParams = {
         account_id: response.account_id,
         username: response.username,

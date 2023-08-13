@@ -1,15 +1,35 @@
 
 <div class="rolling-text-container" [class.show]="showText">
     <!-- <p class="rolling-text">{{ rollingText }}</p> -->
-    <p class="rolling-text">{{ text }}</p>
+    <!-- <p class="rolling-text">{{ text }}</p> -->
+      <!-- calculate total return -->
+ <div *ngIf="(portfolioData$ | async) as portfolioData">
+  <h3 class="total-return" *ngIf="portfolioData.length > 0">
+    <strong>Total Return: 
+    <span [ngClass]="{ 'red': calculateTotalReturn(portfolioData) < 0, 'green': calculateTotalReturn(portfolioData) > 0 }">
+      <ng-container *ngIf="calculateTotalReturn(portfolioData) > 0">&#9650;</ng-container>
+      <ng-container *ngIf="calculateTotalReturn(portfolioData) < 0">&#9660;</ng-container>
+      {{ calculateTotalReturn(portfolioData) | number: '1.2-2' }} {{portfolioData[0].currency}}
+    </span></strong>
+
+    &nbsp;&nbsp;&nbsp; <strong>%Return: 
+    <span [ngClass]="{ 'red': calculateTotalPercentageReturn(portfolioData) < 0, 'green': calculateTotalPercentageReturn(portfolioData) > 0 }">
+      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) > 0">&#9650;</ng-container>
+      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) < 0">&#9660;</ng-container>
+      {{ calculateTotalPercentageReturn(portfolioData) | number: '1.2-2' }} %
+    </span> </strong>
+  </h3>
+</div>
 </div>
 
-<div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane active" id="nav-portfolio" role="tabpanel" aria-labelledby="nav-portfolio-tab">
-      <br>
-      <div *ngIf="(portfolioData$ | async) as portfolioData">
+<div class = "container-fluid">
+  <p>Welcome, {{ username }}!</p><br>
+
+
+<!-- display all trades (combined) -->
+    <div *ngIf="(portfolioData$ | async) as portfolioData">
       <div *ngIf="portfolioData.length > 0;else noPortfolioMessage" style="overflow-x:auto;">
-        <p>Portfolio (Cumulative)</p>
+        <p>Trades (combined)</p>
       <table>
           <thead>
             <tr>
@@ -45,12 +65,17 @@
         </div>
         </div>
 
+  </div>
 
-<br>
+<br><br>
+<div class="horizontal-line"></div>
+<br><br>
 <app-research></app-research>
 <br>
 
 
 <ng-template #noPortfolioMessage>
     <p>No trades created.</p>
-  </ng-template>
+</ng-template>
+
+

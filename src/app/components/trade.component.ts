@@ -1,16 +1,19 @@
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject, switchMap, from, firstValueFrom } from 'rxjs';
-import { StockInfo, PortfolioData, TradeResponse, Stock, TradeData } from '../models';
+import { StockInfo, PortfolioData, TradeResponse, Stock, TradeData, LoginResponse } from '../models';
 import { AccountService } from '../services/account.service';
 import { StockService } from '../services/stock.service';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-trade',
   templateUrl: './trade.component.html',
-  styleUrls: ['./trade.component.css']
+  styleUrls: ['./trade.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class TradeComponent {
 
@@ -18,6 +21,7 @@ export class TradeComponent {
   stockInfoList$!: Promise<StockInfo[]>
   portfolioSymbols$!:Promise<string[]>
   portfolioData$!:Promise<PortfolioData[]>
+  loginResponse$!: Observable<LoginResponse>
 
 
   tradeResponse$!: Promise<TradeResponse>
@@ -41,6 +45,8 @@ export class TradeComponent {
   router = inject(Router)
   accountSvc = inject(AccountService)
   stockSvc = inject(StockService)
+  // modalSvc = inject(NgbModal)
+  // constructor(private modalService: NgbModal) {}
   errorMessage$!: Observable<string>
 
   @Input()
@@ -58,6 +64,9 @@ export class TradeComponent {
     this.tradeForm = this.createForm()
     this.errorMessage$ = this.accountSvc.onErrorMessage;
 
+    this.loginResponse$ = this.accountSvc.onLoginRequest
+
+    //to display all trades
     // this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)
     // console.info('this.symbols$ is' + this.portfolioSymbols$)
 
@@ -95,6 +104,7 @@ export class TradeComponent {
 
   processTrade() {
     console.log('I have submitted the form')
+    // this.modalSvc.dismissAll();
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -110,7 +120,9 @@ export class TradeComponent {
       date: today,
       stockName: this.stockName,
       price: this.closePrice,
-      fee: 0
+      fee: 0,
+      accountId: this.accountId,
+      username: this.username
     };
     
 
@@ -144,10 +156,10 @@ export class TradeComponent {
       console.info('this.errorMessage is ' + this.errorMessage)
 
     });
+    // this.router.navigate(['/dashboard'])
 
 
   }
-
 
   filtering(text:string){
     this.searchInput.next(text as string)
@@ -160,7 +172,7 @@ export class TradeComponent {
   }
 
   getStockData(symbol: string) {
-    let interval = '5min'
+    let interval = '1min'
     this.symbol = symbol
 
 

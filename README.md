@@ -64,3 +64,13 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 
 11 Aug (Fri)
 - fixed modal buy form submission
+
+13 Aug (Sun)
+- implemented returns, total returns
+- improved user interface
+
+14 Aug (Mon)
+- adjust duration of stock data stored in trades to 1 day
+- Adjust accuracy of stock data
+- Implement list of all trades
+- implement sql 'available cash' in account

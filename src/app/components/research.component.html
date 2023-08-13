@@ -1,13 +1,15 @@
 <div class = "container-fluid">
 
+  <h3>Stock Information</h3><br>
+
       <div class="col-md-9">
         <div *ngIf="(stock$ | async) as stock">
-         <td>
+         
           <table class="table-color">
             <tr class="data-row">
               <td>Exchange</td><td>Symbol</td><td>Name</td><td>Open</td>
               <td>High</td><td>Low</td><td>Close</td><td>Vol.</td>
-              <td>Chg.</td>  <td>% Chg.</td>
+              <td>Chg.</td>  <td>% Chg.</td><td>Action</td>
             </tr>
             <tr class="data-row">
               <td>{{ stock.exchange }}</td><td>{{ stock.symbol }}</td> <td>{{ stock.name }}</td> <td>{{ stock.open }}</td>
@@ -20,16 +22,17 @@
                 <span class="arrow-up" *ngIf="stock.percent_change > 0">&#9650; &nbsp;+{{ stock.percent_change }}%</span>
                 <span class="arrow-down" *ngIf="stock.percent_change < 0">&#9660; &nbsp;{{ stock.percent_change }}%</span>
               </td>
+              <td><app-trade [stockName]="stock.name" [closePrice]="stock.close"
+                [stockSymbol]="stock.symbol" [stockExchange]="stock.exchange"
+                [currency]="stock.currency"></app-trade></td>
 
             </tr>
-               
+   
         </table>
-        </td>
-        <app-trade [stockName]="stock.name" [closePrice]="stock.close"
-            [stockSymbol]="stock.symbol" [stockExchange]="stock.exchange"
-            [currency]="stock.currency"></app-trade>
-        <!-- <app-trade [stockName]="stock.name" [closePrice]="stock.close"></app-trade> -->
         <i>Data is accurate to 1 min.</i>
+        <!-- <app-trade [stockName]="stock.name" [closePrice]="stock.close"
+            [stockSymbol]="stock.symbol" [stockExchange]="stock.exchange"
+            [currency]="stock.currency"></app-trade> -->
           
         </div>
       </div>

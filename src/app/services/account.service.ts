@@ -96,6 +96,9 @@ login(email: string, password: string): Observable<LoginResponse> {
       filter((response) => response !== null), 
       //the fired onLoginRequest.next is received in dashboard component's ngOnit 
       tap(response => {
+        console.info('Login response:', response);
+        this.username = response.username;
+        this.account_id = response.account_id;
         // Handle successful login response here
         this.onLoginRequest.next(response);
         // this.isLoggedInChanged.next(true); // Emit true to indicate user is logged in
@@ -112,8 +115,8 @@ login(email: string, password: string): Observable<LoginResponse> {
     console.info('I am passing to saveToPortfolio price:' + data.price)
 
     const form = new HttpParams()
-      .set("account_id", this.account_id)
-      .set("username", this.username)
+      .set("account_id", data.accountId)
+      .set("username", data.username)
       .set("exchange", data.exchange)
       .set("symbol", data.symbol)
       .set("stockName", data.stockName)
@@ -123,8 +126,8 @@ login(email: string, password: string): Observable<LoginResponse> {
       // .set("fee", data.fee)
       .set("date", data.date.toString())
 
-    console.info('account_id in savePortfolio: ' + this.account_id)
-    console.info('username in savePortfolio: ' + this.username)
+    console.info('account_id in savePortfolio: ' + data.accountId)
+    console.info('username in savePortfolio: ' + data.username)
     console.info('stockName in savePortfolio: ' + data.stockName)
     console.info('currency in savePortfolio: ' + data.currency)
 
