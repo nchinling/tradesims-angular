@@ -4,64 +4,7 @@
       <p>{{errorMessage}}</p>
   </div>
 
- <!-- <div class="container-fluid" *ngIf="(portfolioData$ | async) as portfolioData">
-  <p class="total-return" *ngIf="portfolioData.length > 0">
-    <strong>Total Return: 
-    <span [ngClass]="{ 'red': calculateTotalReturn(portfolioData) < 0, 'green': calculateTotalReturn(portfolioData) > 0 }">
-      <ng-container *ngIf="calculateTotalReturn(portfolioData) > 0">&#9650;</ng-container>
-      <ng-container *ngIf="calculateTotalReturn(portfolioData) < 0">&#9660;</ng-container>
-      {{ calculateTotalReturn(portfolioData) | number: '1.2-2' }} {{portfolioData[0].currency}}
-    </span></strong>
 
-    &nbsp;&nbsp;&nbsp; <strong>%Return: 
-    <span [ngClass]="{ 'red': calculateTotalPercentageReturn(portfolioData) < 0, 'green': calculateTotalPercentageReturn(portfolioData) > 0 }">
-      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) > 0">&#9650;</ng-container>
-      <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) < 0">&#9660;</ng-container>
-      {{ calculateTotalPercentageReturn(portfolioData) | number: '1.2-2' }} %
-    </span> </strong>
-  </p>
-</div> -->
-
-<!-- <div *ngIf="(portfolioData$ | async) as portfolioData" style="overflow-x:auto;">
-<div *ngIf="portfolioData.length > 0">
-<h4>Trades</h4>
-
-    <table>
-      <thead>
-        <tr>
-          <th>#</th><th>Stock Name</th><th>Exchange</th>
-          <th>Units</th><th>Avg Unit Price</th><th>Buy Total Price</th>
-          <th>Unit Current Price</th><th>Total Current Price</th>
-          <th>Total Return</th><th>% Change</th><th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of portfolioData; let i = index">
-          <td>{{i+1}}</td>
-          <td>{{ data.stock_name }}</td><td>{{ data.exchange.toUpperCase()}}</td>
-          <td>{{ data.units }}</td><td>{{ data.buy_unit_price | number: '1.2-2' }}</td>
-          <td>{{data.currency}} {{ data.buy_total_price }} </td><td>{{ data.unit_current_price }}</td>
-          <td>{{ data.currency }} {{ data.total_current_price | number: '1.2-2' }}</td>
-          <td [ngClass]="{ 'red': data.total_return < 0, 
-          'green': data.total_return > 0 }">
-          <span class="arrow-up" *ngIf="data.total_return > 0"><strong>&#9650; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
-          <span class="arrow-down" *ngIf="data.total_return < 0"><strong>&#9660; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
-  
-        </td>
-
-          <td [ngClass]="{ 'red': data.total_percentage_change < 0, 
-          'green': data.total_percentage_change > 0 }">
-          <span class="arrow-up" *ngIf="data.total_percentage_change > 0"><strong>&#9650; &nbsp;{{ data.total_percentage_change| number: '1.2-2'  }} %</strong></span>
-          <span class="arrow-down" *ngIf="data.total_percentage_change < 0"><strong>&#9660; &nbsp;{{ data.total_percentage_change | number: '1.2-2'  }} %</strong></span>
-          </td>
-          <td><button class="fa-solid fa-xmark custom-button" type="button" (click)="removeFromCumulativePortfolio(i)"></button></td>
-        </tr>
-      </tbody>
-    </table> 
-  </div>
-  </div>
-
-  <br>  -->
 
 <br>
 <!-- Button trigger modal -->
@@ -80,7 +23,7 @@
     <div class="modal-body">
         <form [formGroup]="tradeForm" (submit)="processTrade()" class="form-container">
           <p class="black-text">Stock Name: {{ stockName }}</p>
-          <p class="black-text">Close Price: {{ closePrice }}</p>  
+          <p class="black-text">Real-Time Price: {{ livePrice }} (to 1 minute) </p>  
         
               <div class="form-row">
                 <label for="units" class="black-text">Units:</label>

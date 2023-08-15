@@ -36,6 +36,7 @@ export class TradeComponent {
   username!: string
   parsedUsername!: string
   accountId!: string
+ 
   filter!:string
   portfolioList!: string[]
 
@@ -54,6 +55,7 @@ export class TradeComponent {
 
   @Input() stockName!: string;
   @Input() closePrice!: number;
+  @Input() livePrice!: number;
   @Input() stockSymbol!: string;
   @Input() stockExchange!: string;
   @Input() currency!: string;
@@ -156,7 +158,7 @@ export class TradeComponent {
       console.info('this.errorMessage is ' + this.errorMessage)
 
     });
-    // this.router.navigate(['/dashboard'])
+    this.router.navigate(['/dashboard'])
 
 
   }

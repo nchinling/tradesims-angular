@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit{
   tradeResponse$!: Observable<TradeResponse>
   errorMessage$!: Observable<string>
   username!: string
+  cash!: number
   status!: string
   timestamp!: string
   accountId!: string
@@ -79,6 +80,7 @@ export class DashboardComponent implements OnInit{
 
         this.accountId = this.accountSvc.account_id;
         this.username = this.accountSvc.username;
+        this.cash = this.accountSvc.cash;
      
         // to display total returns
         this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)

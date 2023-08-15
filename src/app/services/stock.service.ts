@@ -35,7 +35,7 @@ export class StockService {
               map(resp => ({ symbol: resp.symbol, name: resp.name, 
                           exchange: resp.exchange, currency: resp.currency,
                           open:resp.open, high:resp.high, low:resp.low,
-                          close:resp.close, volume:resp.volume, 
+                          close:resp.close, real_time_price:resp.real_time_price, volume:resp.volume, 
                           previous_close:resp.previous_close, change:resp.change,
                           percent_change:resp.percent_change, datetime:resp.datetime
                           }))
@@ -124,7 +124,7 @@ export class StockService {
                   map(resp => ({ symbol: resp.symbol, name: resp.name, 
                               exchange: resp.exchange, currency: resp.currency,
                               open:resp.open, high:resp.high, low:resp.low,
-                              close:resp.close, volume:resp.volume, 
+                              close:resp.close, real_time_price:resp.real_time_price, volume:resp.volume, 
                               previous_close:resp.previous_close, change:resp.change,
                               percent_change:resp.percent_change, datetime:resp.datetime
                               }))

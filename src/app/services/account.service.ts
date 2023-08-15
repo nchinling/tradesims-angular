@@ -24,6 +24,7 @@ export class AccountService {
   password = "";
   queryParams: any;
   account_id = ""
+  cash!: number;
   KEY = "username"
   key!: string
 
@@ -99,6 +100,7 @@ login(email: string, password: string): Observable<LoginResponse> {
         console.info('Login response:', response);
         this.username = response.username;
         this.account_id = response.account_id;
+        this.cash = response.cash;
         // Handle successful login response here
         this.onLoginRequest.next(response);
         // this.isLoggedInChanged.next(true); // Emit true to indicate user is logged in

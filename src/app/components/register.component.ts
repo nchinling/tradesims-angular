@@ -66,7 +66,7 @@ export class RegisterComponent {
     //the username and password are passed to accountSvc for loginGuard
     this.accountSvc.username = username
     this.accountSvc.password = password
-    console.info('registation data: ', registerData)
+    console.info('registration data: ', registerData)
 
     setTimeout(() => {
       this.isLoading = false;

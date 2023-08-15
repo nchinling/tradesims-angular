@@ -1,4 +1,3 @@
-
 <div class="rolling-text-container" [class.show]="showText">
     <!-- <p class="rolling-text">{{ rollingText }}</p> -->
     <!-- <p class="rolling-text">{{ text }}</p> -->
@@ -23,7 +22,8 @@
 </div>
 
 <div class = "container-fluid">
-  <p>Welcome, {{ username }}!</p><br>
+  <p>Welcome, {{ username }}!</p>
+  <p>Cash balance: ${{ cash }}</p>
 
 
 <!-- display all trades (combined) -->
@@ -70,6 +70,7 @@
 <br><br>
 <div class="horizontal-line"></div>
 <br><br>
+<!-- <app-research [stockName]="stock.name"></app-research> -->
 <app-research></app-research>
 <br>
 

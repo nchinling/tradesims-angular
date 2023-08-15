@@ -13,6 +13,7 @@ export interface LoginResponse {
     username: string
     timestamp: string
     key: string
+    cash: number
 }
 
 export interface RegisterResponse {
@@ -20,6 +21,7 @@ export interface RegisterResponse {
     username: string
     timestamp: string
     status: string
+    cash: number
 
 }
 
@@ -127,6 +129,7 @@ export interface Stock{
     high: number
     low: number
     close: number
+    real_time_price: number
     volume: number
     previous_close: number
     change: number

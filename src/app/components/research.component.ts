@@ -98,7 +98,9 @@ export class ResearchComponent  {
       this.initialChartSymbol = 'AAPL'
 
       const symbolToLoad = (this.loadStock !== '') ? this.loadStock : 'AAPL';
-      this.stock$ = this.stockSvc.getStockData(symbolToLoad, this.loadInterval);
+      console.log('The symbol in research comp is ' + this.loadStock)
+      console.log('The symbolToLoad is ' + symbolToLoad)
+      this.stock$ = this.stockSvc.getStockData(symbolToLoad, '1min');
       this.stockProfile$ = this.stockSvc.getStockProfile(symbolToLoad); 
       this.stockProfile$.then(profile => {
         const name = profile.name
@@ -110,11 +112,11 @@ export class ResearchComponent  {
   }
 
   getStockData(symbol?: string) {
-    let interval = '5min'
+    let interval = '1min'
 
     if (!symbol) {
       symbol = this.stockDataForm.get('symbol')?.value;
-      interval = this.stockDataForm.get('interval')?.value
+      // interval = this.stockDataForm.get('interval')?.value
     }
   
     if (symbol && interval) {
@@ -135,7 +137,7 @@ export class ResearchComponent  {
   private createStockDataForm(): FormGroup {
     return this.fb.group({
       symbol: this.fb.control<string>('', [ Validators.required ]),
-      interval: this.fb.control<string>(this.loadInterval, [ Validators.required ])
+      // interval: this.fb.control<string>(this.loadInterval, [ Validators.required ])
     })
   }
 

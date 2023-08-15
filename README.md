@@ -74,3 +74,6 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - Adjust accuracy of stock data
 - Implement list of all trades
 - implement sql 'available cash' in account
+
+15 Aug (Mon)
+- implemented sql 'available cash' in account

@@ -33,6 +33,7 @@ background-color: green;
 .data-row td {
     padding-left: 20px; 
     padding-right: 30px; 
+    white-space: nowrap;
 }
 
 
