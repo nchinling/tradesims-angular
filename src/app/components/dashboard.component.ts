@@ -69,6 +69,7 @@ export class DashboardComponent implements OnInit{
     this.registerResponse$ = this.accountSvc.onRegisterRequest
     this.errorMessage$ = this.accountSvc.onErrorMessage
     this.tradeResponse$ = this.accountSvc.onSavePortfolioRequest
+    this.loginResponse$ = this.accountSvc.onLoginRequest
 
 
         const queryParams = this.activatedRoute.snapshot.queryParams;

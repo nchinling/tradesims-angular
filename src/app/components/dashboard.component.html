@@ -24,6 +24,11 @@
 <div class = "container-fluid">
   <p>Welcome, {{ username }}!</p>
   <p>Cash balance: ${{ cash }}</p>
+  <div *ngIf="(loginResponse$ | async) as loginResponse">
+    <p>Cash balance: ${{ loginResponse.cash }}</p>
+  </div>
+  
+
 
 
 <!-- display all trades (combined) -->
@@ -49,15 +54,15 @@
               <td>{{ data.currency }} {{ data.total_current_price | number: '1.2-2' }}</td>
               <td [ngClass]="{ 'red': data.total_return < 0, 
               'green': data.total_return > 0 }">
-              <span class="arrow-up" *ngIf="data.total_return > 0"><strong>&#9650; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
-              <span class="arrow-down" *ngIf="data.total_return < 0"><strong>&#9660; &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+              <span class="arrow-up" *ngIf="data.total_return > 0"><strong> &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
+              <span class="arrow-down" *ngIf="data.total_return < 0"><strong> &nbsp;{{ data.total_return | number: '1.2-2'  }} {{ data.currency }}</strong></span>
       
             </td>
     
               <td [ngClass]="{ 'red': data.total_percentage_change < 0, 
               'green': data.total_percentage_change > 0 }">
-              <span class="arrow-up" *ngIf="data.total_percentage_change > 0"><strong>&#9650; &nbsp;{{ data.total_percentage_change| number: '1.2-2'  }} %</strong></span>
-              <span class="arrow-down" *ngIf="data.total_percentage_change < 0"><strong>&#9660; &nbsp;{{ data.total_percentage_change | number: '1.2-2'  }} %</strong></span></td>
+              <span class="arrow-up" *ngIf="data.total_percentage_change > 0"><strong> &nbsp;{{ data.total_percentage_change| number: '1.2-2'  }} %</strong></span>
+              <span class="arrow-down" *ngIf="data.total_percentage_change < 0"><strong> &nbsp;{{ data.total_percentage_change | number: '1.2-2'  }} %</strong></span></td>
             
             </tr>
           </tbody>

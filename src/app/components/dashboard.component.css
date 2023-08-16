@@ -23,7 +23,7 @@
 
   @keyframes colorChange {
     0%, 100% {
-      background-color: #ff4500; /* Fiery hot color */
+      background-color: #007bff; /* Fiery hot color */
     }
     50% {
       background-color: #662d91; /* Different color */

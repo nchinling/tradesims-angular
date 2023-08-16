@@ -10,6 +10,7 @@
               <td style="width: 10%;">Exchange</td><td style="width: 10%;">Symbol</td>
               <td style="width: 10%;">Name</td><td style="width: 10%;">Open</td>
               <td style="width: 10%;">High</td><td style="width: 10%;">Low</td><td style="width: 20%;">Close</td>
+              <td>Prev. Close</td>
               <td style="width: 10%;">Vol.</td><td style="width: 20%;">Live Price</td>
               <td>Chg.</td>  <td>% Chg.</td><td>Action</td>
             </tr>
@@ -17,7 +18,7 @@
               <td style="width: 10%;" >{{ stock.exchange }}</td><td style="width: 10%;">{{ stock.symbol }}</td> 
               <td style="width: 10%;">{{ stock.name }}</td> <td style="width: 10%;">{{ stock.open }}</td>
               <td style="width: 10%;">{{ stock.high }}</td><td style="width: 10%;">{{ stock.low }}</td>
-              <td style="width: 20%;">{{ stock.close }}</td><td>{{ stock.volume }}</td>
+              <td style="width: 20%;">{{ stock.close }}</td><td>{{stock.previous_close}}</td><td>{{ stock.volume }}</td>
               <td>{{stock.real_time_price}}</td>
               <td>
                 <span class="arrow-up" *ngIf="stock.change > 0">&#9650; &nbsp;+{{ stock.change }}</span>

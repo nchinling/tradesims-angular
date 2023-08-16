@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     const email = this.loginForm.get('email')?.value
     const password = this.loginForm.get('password')?.value
+
+    //for trade component
+    this.accountSvc.email = email
+    this.accountSvc.password = password
     
 
     //the username and password are passed to loginSvc for loginGuard

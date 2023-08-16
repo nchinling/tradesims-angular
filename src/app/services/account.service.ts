@@ -21,6 +21,7 @@ export class AccountService {
   router = inject(Router)
 
   username = "";
+  email = "";
   password = "";
   queryParams: any;
   account_id = ""
@@ -81,7 +82,7 @@ login(email: string, password: string): Observable<LoginResponse> {
     const headers = new HttpHeaders()
       .set("Content-Type", "application/x-www-form-urlencoded")
 
-    return  this.http.post<LoginResponse>(`${URL_API_TRADE_SERVER}/login`, form.toString(), {headers}).pipe(
+    return this.http.post<LoginResponse>(`${URL_API_TRADE_SERVER}/login`, form.toString(), {headers}).pipe(
       catchError(error => {
         let errorMessage = 'An error occurred during login: ' + error.message;
         console.error(errorMessage);

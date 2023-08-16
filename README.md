@@ -75,5 +75,8 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - Implement list of all trades
 - implement sql 'available cash' in account
 
-15 Aug (Mon)
+15 Aug (Tues)
 - implemented sql 'available cash' in account
+
+16 Aug (Wed)
+- updated cash balance in sql

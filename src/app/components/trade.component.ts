@@ -34,6 +34,8 @@ export class TradeComponent {
   tradeForm!: FormGroup
   errorMessage!: string;
   username!: string
+  email!: string
+  password!: string
   parsedUsername!: string
   accountId!: string
  
@@ -49,6 +51,7 @@ export class TradeComponent {
   // modalSvc = inject(NgbModal)
   // constructor(private modalService: NgbModal) {}
   errorMessage$!: Observable<string>
+  login$!: Promise<LoginResponse>
 
   @Input()
   exchange = "nyse"
@@ -121,7 +124,7 @@ export class TradeComponent {
       exchange: this.stockExchange,
       date: today,
       stockName: this.stockName,
-      price: this.closePrice,
+      price: this.livePrice,
       fee: 0,
       accountId: this.accountId,
       username: this.username
@@ -148,9 +151,30 @@ export class TradeComponent {
       this.portfolioSymbols$.then((symbol: string[]) => {
         console.info('Symbols:', symbol);
         this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
+        this.email = this.accountSvc.email
+        this.password = this.accountSvc.password
+    
+          //Using promise
+          this.login$=firstValueFrom(this.accountSvc.login(this.email, this.password))
+            this.login$.then((response) => {
+              console.log('timestamp:', response.timestamp);
+              console.log('username:', response.username);
+              console.log('account_id:', response.account_id);
+              const queryParams = {
+                account_id: response.account_id,
+                username: response.username,
+                // timestamp: response.timestamp
+              };
+        
+            this.router.navigate(['/dashboard'], { queryParams: queryParams })
+        
+           
+            });
+    
       }).catch((error) => {
         console.error(error);
       });
+      
 
     }).catch((error)=>{
   
@@ -158,7 +182,8 @@ export class TradeComponent {
       console.info('this.errorMessage is ' + this.errorMessage)
 
     });
-    this.router.navigate(['/dashboard'])
+
+    // this.router.navigate(['/dashboard'])
 
 
   }
