@@ -33,10 +33,10 @@ export interface TradeData{
     units: number
     price: number
     currency: string
-    fee: number
     date: Date
     accountId: string
     username: string
+    action: string
 
 }
 
@@ -45,12 +45,14 @@ export interface TradeResponse{
     account_id: string
     username: string
     exchange: string
+    currency: string
     stockName: string
     symbol: string
     units: number
     price: number
-    fee: number
+    total_price: number
     date: Date
+    action: string
 
 }
 

@@ -67,16 +67,12 @@ export class LoginComponent implements OnInit {
       console.log('timestamp:', response.timestamp);
       console.log('username:', response.username);
       console.log('account_id:', response.account_id);
+      console.log('cash:' , response.cash)
       const queryParams = {
         account_id: response.account_id,
         username: response.username,
         // timestamp: response.timestamp
       };
-
-     
-      // this.accountSvc.account_id = response.account_id
-      // this.accountSvc.key = response.key
-
 
     this.router.navigate(['/dashboard'], { queryParams: queryParams })
 
@@ -85,6 +81,9 @@ export class LoginComponent implements OnInit {
 
 
   }
+
+
+  
 
 }
 

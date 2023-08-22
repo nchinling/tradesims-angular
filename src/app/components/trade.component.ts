@@ -67,22 +67,11 @@ export class TradeComponent {
     this.accountId = this.accountSvc.account_id
     this.username = this.accountSvc.username
     this.tradeForm = this.createForm()
+  
     this.errorMessage$ = this.accountSvc.onErrorMessage;
 
     this.loginResponse$ = this.accountSvc.onLoginRequest
 
-    //to display all trades
-    // this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)
-    // console.info('this.symbols$ is' + this.portfolioSymbols$)
-
-    // this.portfolioSymbols$.then((symbol: string[]) => {
-    //   console.info('Symbols:', symbol);
-    //   this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
-    // }).catch((error) => {
-    //   console.error(error);
-    // });
-
-    
     this.stockSearch$ = this.searchInput.pipe(
       switchMap((text: string) => {
         return from(this.stockSvc.getStocksList(this.exchange, text, 5, 0));
@@ -115,7 +104,7 @@ export class TradeComponent {
     today.setHours(0, 0, 0, 0);
   
     const datePipe = new DatePipe('en-US');
-    const formattedDate = datePipe.transform(today, 'yyyy-MM-dd');
+    // const formattedDate = datePipe.transform(today, 'yyyy-MM-dd');
     
     const tradeData: TradeData = {
       symbol: this.stockSymbol,
@@ -125,9 +114,9 @@ export class TradeComponent {
       date: today,
       stockName: this.stockName,
       price: this.livePrice,
-      fee: 0,
       accountId: this.accountId,
-      username: this.username
+      username: this.username,
+      action: "Buy"
     };
     
 
@@ -183,8 +172,87 @@ export class TradeComponent {
 
     });
 
-    // this.router.navigate(['/dashboard'])
 
+  }
+
+
+
+
+  sellTrade(){
+    console.log('I have submitted the form')
+    // this.modalSvc.dismissAll();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  
+    const datePipe = new DatePipe('en-US');
+    // const formattedDate = datePipe.transform(today, 'yyyy-MM-dd');
+    
+    const tradeData: TradeData = {
+      symbol: this.stockSymbol,
+      currency: this.currency,
+      units: this.tradeForm.value.units,
+      exchange: this.stockExchange,
+      date: today,
+      stockName: this.stockName,
+      price: this.livePrice,
+      accountId: this.accountId,
+      username: this.username,
+      action: "Sell"
+    };
+    
+    console.info('trade data: ', tradeData)
+    this.tradeForm = this.createForm()
+
+        //Using promise
+        this.tradeResponse$=firstValueFrom(this.accountSvc.deleteTrade(tradeData))
+        this.tradeResponse$.then((response) => {
+          console.log('exchange:', response.exchange);
+          console.log('stockName:', response.stockName);
+          console.log('symbol:', response.symbol);
+          console.log('units:', response.units);
+          // console.log('price:', response.price);
+          // console.log('units:', response.fee);
+       
+    
+          //refer to researchComp
+          this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)
+          console.info('this.symbols$ is' + this.portfolioSymbols$)
+          this.portfolioSymbols$.then((symbol: string[]) => {
+            console.info('Symbols:', symbol);
+            this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
+            this.email = this.accountSvc.email
+            this.password = this.accountSvc.password
+
+        
+              //Using promise
+              this.login$=firstValueFrom(this.accountSvc.login(this.email, this.password))
+                this.login$.then((response) => {
+                  console.log('timestamp:', response.timestamp);
+                  console.log('username:', response.username);
+                  console.log('account_id:', response.account_id);
+                  const queryParams = {
+                    account_id: response.account_id,
+                    username: response.username,
+                    // timestamp: response.timestamp
+                  };
+            
+                this.router.navigate(['/dashboard'], { queryParams: queryParams })
+            
+               
+                });
+        
+          }).catch((error) => {
+            console.error(error);
+          });
+          
+    
+        }).catch((error)=>{
+      
+          this.errorMessage = error.error;
+          console.info('this.errorMessage is ' + this.errorMessage)
+    
+        });
 
   }
 

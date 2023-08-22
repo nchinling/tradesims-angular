@@ -2,35 +2,38 @@
     <!-- <p class="rolling-text">{{ rollingText }}</p> -->
     <!-- <p class="rolling-text">{{ text }}</p> -->
       <!-- calculate total return -->
+  <p><strong>Net Total: ${{ netTotal }} </strong></p>&nbsp;&nbsp;&nbsp;
+  <p><strong>Total % Returns: {{ netPercentageReturn }} % </strong></p>&nbsp;&nbsp;&nbsp;
  <div *ngIf="(portfolioData$ | async) as portfolioData">
-  <h3 class="total-return" *ngIf="portfolioData.length > 0">
-    <strong>Total Return: 
+  <p class="total-return" *ngIf="portfolioData.length > 0">
+    <!-- <strong>Net Total: ${{ loginResponse ? loginResponse.cash : cash }} </strong>&nbsp;&nbsp;&nbsp; -->
+    <strong>Stock Returns ($): 
     <span [ngClass]="{ 'red': calculateTotalReturn(portfolioData) < 0, 'green': calculateTotalReturn(portfolioData) > 0 }">
       <ng-container *ngIf="calculateTotalReturn(portfolioData) > 0">&#9650;</ng-container>
       <ng-container *ngIf="calculateTotalReturn(portfolioData) < 0">&#9660;</ng-container>
       {{ calculateTotalReturn(portfolioData) | number: '1.2-2' }} {{portfolioData[0].currency}}
     </span></strong>
 
-    &nbsp;&nbsp;&nbsp; <strong>%Return: 
+    &nbsp;&nbsp;&nbsp; <strong>Stock Returns (%): 
     <span [ngClass]="{ 'red': calculateTotalPercentageReturn(portfolioData) < 0, 'green': calculateTotalPercentageReturn(portfolioData) > 0 }">
       <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) > 0">&#9650;</ng-container>
       <ng-container *ngIf="calculateTotalPercentageReturn(portfolioData) < 0">&#9660;</ng-container>
       {{ calculateTotalPercentageReturn(portfolioData) | number: '1.2-2' }} %
     </span> </strong>
-  </h3>
+  </p>
 </div>
 </div>
 
 <div class = "container-fluid">
   <p>Welcome, {{ username }}!</p>
-  <p>Cash balance: ${{ cash }}</p>
-  <div *ngIf="(loginResponse$ | async) as loginResponse">
-    <p>Cash balance: ${{ loginResponse.cash }}</p>
+
+  <div>
+    <p>Cash balance: ${{ loginResponse ? loginResponse.cash : cash }}</p>
   </div>
   
 
-
-
+  
+<div class="container">
 <!-- display all trades (combined) -->
     <div *ngIf="(portfolioData$ | async) as portfolioData">
       <div *ngIf="portfolioData.length > 0;else noPortfolioMessage" style="overflow-x:auto;">
@@ -50,7 +53,7 @@
               <td>{{i+1}}</td>
               <td class="stock-item" (click)="viewStock(data.symbol)">{{ data.stock_name }}</td><td>{{ data.exchange.toUpperCase()}}</td>
               <td>{{ data.units }}</td><td>{{ data.buy_unit_price | number: '1.2-2' }}</td>
-              <td>{{data.currency}} {{ data.buy_total_price }} </td><td>{{ data.unit_current_price }}</td>
+              <td>{{data.currency}} {{ data.buy_total_price | number: '1.2-2'}} </td><td>{{ data.unit_current_price | number: '1.2-2'}}</td>
               <td>{{ data.currency }} {{ data.total_current_price | number: '1.2-2' }}</td>
               <td [ngClass]="{ 'red': data.total_return < 0, 
               'green': data.total_return > 0 }">
@@ -69,13 +72,47 @@
         </table>
         </div>
         </div>
+   
 
   </div>
 
 <br><br>
 <div class="horizontal-line"></div>
+<br>
+<div class ="container">
+<div *ngIf="(allTradesData$ | async) as allTradesData" style="overflow-x:auto;">
+  <div *ngIf="allTradesData.length > 0; else noPortfolioMessage">
+    <p>Trades (History)</p>
+
+    <table >
+      <thead>
+        <tr>
+          <th>#</th><th>Date</th><th>Action</th><th>Exchange</th><th>Stock Name</th><th>Symbol</th>
+          <th>Units</th><th>Unit Price</th><th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let data of allTradesData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.date}}</td>
+          <td>{{ data.action}}</td>
+          <td>{{ data.exchange.toUpperCase() }}</td>
+          <td>{{ data.stockName }}</td>
+          <td>{{ data.symbol }}</td>
+          <td>{{ data.units }}</td>
+          <td>{{ data.price }}</td>
+          <td>{{ data.currency }} {{ data.total_price | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+
+  <br>
+  
 <br><br>
-<!-- <app-research [stockName]="stock.name"></app-research> -->
 <app-research></app-research>
 <br>
 

@@ -80,3 +80,23 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 
 16 Aug (Wed)
 - updated cash balance in sql
+
+18 Aug (Fri)
+- updated cash balance accurately
+
+21 Aug (Mon)
+- implement delete function
+- create trade log to include 'sell'
+
+22 Aug (Tues)
+- implemented delete function
+- implemented update cash balance and total amount
+- implemented total balance
+
+
+23 Aug (Wed)
+- work on providing correct date
+
+24 Aug (Thu)
+- charts for charting 
+- charts for research

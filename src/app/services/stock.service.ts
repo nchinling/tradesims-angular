@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http"
 import { Injectable, inject } from "@angular/core"
 import { Subject, lastValueFrom, tap, map, firstValueFrom, debounceTime, Observable } from "rxjs"
-import { PortfolioData, Stock, StockInfo, StockProfile, TradesData } from "../models"
+import { PortfolioData, Stock, StockInfo, StockProfile, TradeResponse, TradesData } from "../models"
 
 const URL_API_TRADE_SERVER = 'http://localhost:8080/api'
 // const URL_API_TRADE_SERVER = '/api'
@@ -15,6 +15,7 @@ export class StockService {
     onStockProfileRequest = new Subject<StockProfile>()
     onTradesDataRequest = new Subject<TradesData>()
     onPortfolioDataRequest = new Subject<PortfolioData>()
+    onAllTradesDataRequest = new Subject<TradeResponse[]>()
 
     onStockSelection = new Subject<string>();
     symbols:string[]=[]
@@ -183,7 +184,6 @@ export class StockService {
         .set('interval', interval)
         .set('account_id', account_id)
    
-  
         const request =  lastValueFrom(
           this.http.get<PortfolioData>(`${URL_API_TRADE_SERVER}/quote/portfolio`, { params: queryParams })
             .pipe(
@@ -248,6 +248,24 @@ export class StockService {
       );
   }
 
+
+  getAllTradesData(account_id: string): Observable<TradeResponse[]> {
+  
+    const queryParams = new HttpParams()
+      .set('account_id', account_id);
+  
+    return this.http.get<TradeResponse[]>(`${URL_API_TRADE_SERVER}/allTrades`, { params: queryParams })
+      .pipe(
+        tap(resp => this.onAllTradesDataRequest.next(resp))
+        // map(tradesList => tradesList.map(trade => ({
+        //   account_id: trade.account_id, username: trade.username, exchange: trade.exchange,
+        //   currency: trade.currency, stock_name: trade.stockName,
+        //   symbol: trade.symbol,units: trade.units,price: trade.price,
+        //   total_price: trade.total_price, date: trade.date
+        
+        // })))
+      );
+  }
 
 
 }

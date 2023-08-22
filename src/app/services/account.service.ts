@@ -1,7 +1,7 @@
 import { HttpParams, HttpHeaders, HttpErrorResponse, HttpClient } from "@angular/common/http";
-import { Observable, catchError, throwError, filter, tap, Subject } from "rxjs";
+import { Observable, catchError, throwError, filter, tap, Subject, firstValueFrom } from "rxjs";
 import { LoginResponse, RegisterResponse, TradeData, TradeResponse, UserData } from "../models";
-import { Injectable, inject } from "@angular/core";
+import { ChangeDetectorRef, Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
 
 const URL_API_TRADE_SERVER = 'http://localhost:8080/api'
@@ -19,6 +19,7 @@ export class AccountService {
 
   http=inject(HttpClient)
   router = inject(Router)
+  // cdr = inject(ChangeDetectorRef)
 
   username = "";
   email = "";
@@ -104,7 +105,8 @@ login(email: string, password: string): Observable<LoginResponse> {
         this.cash = response.cash;
         // Handle successful login response here
         this.onLoginRequest.next(response);
-        // this.isLoggedInChanged.next(true); // Emit true to indicate user is logged in
+        // this.cdr.detectChanges();
+    
       })
       
 
@@ -121,6 +123,7 @@ login(email: string, password: string): Observable<LoginResponse> {
       .set("account_id", data.accountId)
       .set("username", data.username)
       .set("exchange", data.exchange)
+      .set("action", data.action)
       .set("symbol", data.symbol)
       .set("stockName", data.stockName)
       .set("units", data.units)
@@ -158,6 +161,30 @@ login(email: string, password: string): Observable<LoginResponse> {
     
   }
 
+
+  deleteTrade(sellData: TradeData){
+      
+    console.info('sending symbol to Stock server with ' + sellData.symbol);
+    console.info('the sell date is ' + sellData.date);
+
+    const sellDataJson = JSON.stringify(sellData);
+
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    const url = `${URL_API_TRADE_SERVER}/tradesList`;
+
+    const options = {
+      headers: headers,
+      body: sellDataJson,
+    };
+
+
+    return this.http.delete<TradeResponse>(url, options).pipe(
+      tap(response => this.onSavePortfolioRequest.next(response))
+    );  
+    
+
+  }
 
 
 }
