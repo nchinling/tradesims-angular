@@ -104,6 +104,8 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - implemented toggle rows
 - worked on accuracy of profit
 - row removed automatically when 0 units
+- implemented chart.js
+- input stock data into chart.js
 - corrected date for sell
 - remove code that is not required in calculating profit
 

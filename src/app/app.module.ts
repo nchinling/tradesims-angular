@@ -17,6 +17,7 @@ import { ResearchComponent } from './components/research.component';
 import { TradeComponent } from './components/trade.component';
 import { loginGuard } from './util';
 import { StockService } from './services/stock.service';
+import { PortfolioChartComponent } from './components/portfolio-chart.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, title: 'Welcome to TradeSIMS' },
@@ -35,7 +36,7 @@ const appRoutes: Routes = [
     MainComponent,
     LoginComponent, 
     RegisterComponent, NavbarComponent, DashboardComponent, 
-    LeaderboardComponent, ResearchComponent, TradeComponent
+    LeaderboardComponent, ResearchComponent, TradeComponent, PortfolioChartComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, FormsModule, HttpClientModule,
