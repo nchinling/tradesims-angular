@@ -98,5 +98,18 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - work on providing correct date
 
 24 Aug (Thu)
+- corrected accuracy on profit
+
+25 Aug (Fri)
+- implemented toggle rows
+- worked on accuracy of profit
+- row removed automatically when 0 units
+- corrected date for sell
+- remove code that is not required in calculating profit
+
+26 Aug (Sat)
+- enable 0% to be reflected
+- work on providing error messages
 - charts for charting 
 - charts for research
+

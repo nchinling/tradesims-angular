@@ -3,6 +3,7 @@ import { Observable, catchError, throwError, filter, tap, Subject, firstValueFro
 import { LoginResponse, RegisterResponse, TradeData, TradeResponse, UserData } from "../models";
 import { ChangeDetectorRef, Injectable, inject } from "@angular/core";
 import { Router } from "@angular/router";
+import { DatePipe } from "@angular/common";
 
 const URL_API_TRADE_SERVER = 'http://localhost:8080/api'
 // const URL_API_TRADE_SERVER = '/api'
@@ -132,6 +133,9 @@ login(email: string, password: string): Observable<LoginResponse> {
       // .set("fee", data.fee)
       .set("date", data.date.toString())
 
+      const dateValue = form.get('date');
+      console.log("the date in buyform is " +dateValue);
+
     console.info('account_id in savePortfolio: ' + data.accountId)
     console.info('username in savePortfolio: ' + data.username)
     console.info('stockName in savePortfolio: ' + data.stockName)
@@ -167,6 +171,13 @@ login(email: string, password: string): Observable<LoginResponse> {
     console.info('sending symbol to Stock server with ' + sellData.symbol);
     console.info('the sell date is ' + sellData.date);
 
+    const datePipe = new DatePipe('en-US');
+
+
+if (sellData.date) {
+  const formattedDate = datePipe.transform(sellData.date, 'yyyy-MM-dd');
+  sellData.date = formattedDate as unknown as Date;
+} 
     const sellDataJson = JSON.stringify(sellData);
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

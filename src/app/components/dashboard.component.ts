@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit{
   onStockRequest = new Subject<string>()
 
   showText = false;
+  showAllRowsToggle!:boolean
   text = 'Dashboard';
 
 
@@ -69,6 +70,8 @@ export class DashboardComponent implements OnInit{
       this.showText = false;
     }, 4000); // Duration of the text animation in milliseconds
   });
+
+  this.showAllRowsToggle=false;
 
 
   this.loginSubscription$ = this.accountSvc.onLoginRequest.subscribe((response: LoginResponse) => {
@@ -157,20 +160,20 @@ export class DashboardComponent implements OnInit{
       this.symbols = this.stockSvc.symbols
       console.info('this.symbols in ngOnInit are:' + this.symbols)
 
-      this.tradeResponse$.pipe(
-        switchMap(() => {
-          return this.stockSvc.getPortfolioSymbols(this.accountId);
-        })
-      ).subscribe(
-        (symbol: string[]) => {
-          console.info('Symbols:', symbol);
-          this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
-          this.allTradesData$ = this.stockSvc.getAllTradesData(this.accountId)
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+      // this.tradeResponse$.pipe(
+      //   switchMap(() => {
+      //     return this.stockSvc.getPortfolioSymbols(this.accountId);
+      //   })
+      // ).subscribe(
+      //   (symbol: string[]) => {
+      //     console.info('Symbols:', symbol);
+      //     this.portfolioData$ = this.stockSvc.getPortfolioData(symbol, this.accountId);
+      //     this.allTradesData$ = this.stockSvc.getAllTradesData(this.accountId)
+      //   },
+      //   (error) => {
+      //     console.error(error);
+      //   }
+      // );
 
 }
 
