@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit{
   netPercentageReturn!: number
   initialCash=1000000
 
+
   onStockRequest = new Subject<string>()
 
   showText = false;
@@ -104,6 +105,9 @@ export class DashboardComponent implements OnInit{
         this.accountId = this.accountSvc.account_id;
         this.username = this.accountSvc.username;
         this.cash = this.accountSvc.cash;
+
+
+        
      
         // to display total returns
         this.portfolioSymbols$ = this.stockSvc.getPortfolioSymbols(this.accountId)
@@ -119,6 +123,9 @@ export class DashboardComponent implements OnInit{
               total_current_price += item.total_current_price;
             }
             this.netTotal = (this.loginResponse ? this.loginResponse.cash : this.cash)+total_current_price;
+            
+            this.cashBalance = this.loginResponse ? this.loginResponse.cash : this.accountSvc.cash
+
             this.netPercentageReturn = ((this.netTotal - this.initialCash)/this.initialCash)*100
             console.info("this.netPercentageReturn is ", this.netPercentageReturn)
           })

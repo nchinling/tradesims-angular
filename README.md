@@ -111,7 +111,11 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 
 26 Aug (Sat)
 - enable 0% to be reflected
-- work on providing error messages
+
 - charts for charting 
 - charts for research
+
+27 Aug (Sun)
+- implement research charts
+- work on providing error messages
 

@@ -26,11 +26,14 @@
   <p>Welcome, {{ username }}!</p>
 
   <div>
-    <p>Cash balance: ${{ loginResponse ? loginResponse.cash : cash }}</p>
+    <!-- <p>Cash balance: ${{ loginResponse ? loginResponse.cash : cash }}</p> -->
+    <p>Cash balance: ${{ cashBalance }}</p>
 </div>
   
 
-<app-portfolio-chart [portfolioData$]="portfolioData$"></app-portfolio-chart>
+<app-portfolio-chart [portfolioData$]="portfolioData$" 
+                      [cashBalance]="cashBalance" [stocksValue]="(netTotal==cashBalance)? 0: netTotal-cashBalance">
+</app-portfolio-chart>
 
   
 <div class="container">

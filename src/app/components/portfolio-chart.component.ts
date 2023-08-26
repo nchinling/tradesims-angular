@@ -11,6 +11,8 @@ Chart.register(...registerables);
 export class PortfolioChartComponent implements OnInit, OnChanges {
 
   @Input() portfolioData$!: Promise<PortfolioData[]> 
+  @Input() cashBalance!:number
+  @Input() stocksValue!:number
 
   ctx!:any
   ctx2!:any
@@ -21,51 +23,9 @@ export class PortfolioChartComponent implements OnInit, OnChanges {
     this.ctx = document.getElementById('myChart');
     this.ctx2 = document.getElementById('myChart2');
 
-    // new Chart(this.ctx, {
-    //   type: 'pie', // Change the chart type to 'pie'
-    //   data: {
-    //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    //     datasets: [{
-    //       data: [12, 19, 3, 5, 2, 3], // Data points for each segment
-    //       backgroundColor: [
-    //         'red',
-    //         'blue',
-    //         'yellow',
-    //         'green',
-    //         'purple',
-    //         'orange'
-    //       ] // Customize colors as needed
-    //     }]
-    //   },
-    //   options: {
-    //     responsive: true, // Make the chart responsive
-    //     maintainAspectRatio: false,
-    //   }
-    // });
-
-    
-    new Chart(this.ctx2, {
-      type: 'pie', // Change the chart type to 'pie'
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          data: [12, 19, 3, 5, 2, 3], // Data points for each segment
-          backgroundColor: [
-            'red',
-            'blue',
-            'yellow',
-            'green',
-            'purple',
-            'orange'
-          ] // Customize colors as needed
-        }]
-      },
-      options: {
-        responsive: true, // Make the chart responsive
-        maintainAspectRatio: false,
-      }
-    });
-
+   
+      this.updateCashBalance();
+      console.log("The cashBalance in portfolio is " + this.cashBalance)
 
   }
 
@@ -73,7 +33,41 @@ export class PortfolioChartComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['portfolioData$']) {
       this.updateChart();
+    }
+    if (changes['cashBalance']){
+      this.updateCashBalance();
+    }
+}
+
+private updateCashBalance(): void{
+
+  if (this.cashBalance) {
+
+    if (this.ctx2) {
+          const chart = new Chart(this.ctx2, {
+            type: 'pie',
+            data: {
+              labels: ['Cash', 'Stocks'],
+              datasets: [{
+                data: [this.cashBalance, this.stocksValue],
+                backgroundColor: [
+                  'green',
+                  'blue',
+                  'yellow',
+                  'red',
+                  'purple',
+                  'orange'
+                ] 
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+            }
+          });
+        }
   }
+
 }
 
   private updateChart(): void {

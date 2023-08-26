@@ -18,6 +18,7 @@ import { TradeComponent } from './components/trade.component';
 import { loginGuard } from './util';
 import { StockService } from './services/stock.service';
 import { PortfolioChartComponent } from './components/portfolio-chart.component';
+import { ResearchChartComponent } from './components/research-chart.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, title: 'Welcome to TradeSIMS' },
@@ -25,7 +26,6 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'dashboard', component: DashboardComponent, title: 'Dashboard', canActivate: [loginGuard] },
   { path: 'research', component: ResearchComponent, title: 'Research', canActivate: [loginGuard] },
-  // { path: 'trade', component: TradeComponent, title: 'Trade', canActivate: [loginGuard] },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ]
 
@@ -36,7 +36,7 @@ const appRoutes: Routes = [
     MainComponent,
     LoginComponent, 
     RegisterComponent, NavbarComponent, DashboardComponent, 
-    LeaderboardComponent, ResearchComponent, TradeComponent, PortfolioChartComponent
+    LeaderboardComponent, ResearchComponent, TradeComponent, PortfolioChartComponent, ResearchChartComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, FormsModule, HttpClientModule,

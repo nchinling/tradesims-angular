@@ -38,7 +38,7 @@ background-color: green;
 
 
 .table-color, .table-color th, .table-color td {
-  border: 3px solid green; /* Set the border to be 1px solid blue */
+  border: 3px solid blue; 
   padding: 8px; /* Add some padding to the table cells for better spacing */
   background-color:black;
   color:white;
