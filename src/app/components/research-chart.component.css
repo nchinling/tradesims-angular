@@ -1,0 +1,74 @@
+.chart-canvas {
+    background-color: white;
+}
+
+/* CSS styles for the chart container */
+.chart-container {
+    position: relative;
+    width: 100%; /* Adjust width as needed */
+  }
+  
+  /* CSS styles for the Zoom buttons */
+  .zoom-buttons {
+    position: absolute;
+    top: 10px; /* Adjust the top position */
+    right: 10px; /* Adjust the right position */
+    z-index: 1; /* Ensure the buttons appear over the chart */
+  }
+  
+  /* Style the buttons as needed */
+  .zoom-buttons button {
+    background-color: grey; /* Example button background color */
+    color: #fff; /* Example button text color */
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .btn-custom-wclprice {
+    background-color: limegreen;
+    color: white; /* Set the text color to contrast with the background */
+  }
+
+  
+  .btn-custom-wclprice:hover {
+    background-color: #008000; /* Slightly darker green on hover */
+  }
+
+  .btn-custom-adx {
+    background-color: orange;
+    color: white; /* Set the text color to contrast with the background */
+  }
+
+  .btn-custom-adx:hover {
+    background-color: #e68a00; /* Slightly darker color on hover */
+  }
+
+  .btn-custom-avgprice {
+    background-color: red;
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-avgprice:hover {
+    background-color: #cc0000; /* Slightly darker red on hover */
+  }
+
+  .btn-custom-wma {
+    background-color: purple;
+    color: white; /* Set the text color to contrast with the background */
+  }
+
+  .btn-custom-wma:hover {
+    background-color: #660066; /* Slightly darker color on hover */
+  }
+
+
+  .btn-custom-add {
+    background-color: pink;
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-add:hover {
+    background-color: rgb(132, 99, 104); /* Slightly darker color on hover */
+  }
+  
+

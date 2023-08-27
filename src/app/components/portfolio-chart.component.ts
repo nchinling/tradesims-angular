@@ -17,46 +17,46 @@ export class PortfolioChartComponent implements OnInit, OnChanges {
   ctx!:any
   ctx2!:any
 
-
-
   ngOnInit(): void {
-    this.ctx = document.getElementById('myChart');
-    this.ctx2 = document.getElementById('myChart2');
 
-   
+    this.createOrUpdateCharts();
+    // this.ctx = document.getElementById('myChart');
+    // this.ctx2 = document.getElementById('myChart2');
+
       this.updateCashBalance();
       console.log("The cashBalance in portfolio is " + this.cashBalance)
 
   }
 
-
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['portfolioData$']) {
-      this.updateChart();
-    }
-    if (changes['cashBalance']){
-      this.updateCashBalance();
+    // if (changes['portfolioData$']) {
+    //   this.updateChart();
+    // }
+    // if (changes['cashBalance']){
+    //   this.updateCashBalance();
+    // }
+    if (changes['portfolioData$'] || changes['cashBalance']) {
+      this.createOrUpdateCharts();
     }
 }
 
 private updateCashBalance(): void{
-
   if (this.cashBalance) {
 
     if (this.ctx2) {
           const chart = new Chart(this.ctx2, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
               labels: ['Cash', 'Stocks'],
               datasets: [{
                 data: [this.cashBalance, this.stocksValue],
                 backgroundColor: [
-                  'green',
+                  'orange',
                   'blue',
                   'yellow',
                   'red',
                   'purple',
-                  'orange'
+                  'green'
                 ] 
               }]
             },
@@ -71,6 +71,7 @@ private updateCashBalance(): void{
 }
 
   private updateChart(): void {
+
     if (this.portfolioData$) {
       this.portfolioData$.then(data => {
 
@@ -105,6 +106,36 @@ private updateCashBalance(): void{
           }
         }
       });
+    }
+  }
+
+  private createOrUpdateCharts(): void {
+    if (this.ctx) {
+      const chartInstance = Chart.getChart(this.ctx); 
+      if (chartInstance) {
+        chartInstance.destroy(); 
+      }
+    }
+    
+
+    if (this.ctx2) {
+      const chartInstance = Chart.getChart(this.ctx2); 
+      if (chartInstance) {
+        chartInstance.destroy(); 
+      }
+    }
+    
+
+    // Get the canvas elements after destroying the previous charts.
+    this.ctx = document.getElementById('myChart');
+    this.ctx2 = document.getElementById('myChart2');
+
+    if (this.ctx) {
+      this.updateChart();
+    }
+
+    if (this.ctx2) {
+      this.updateCashBalance();
     }
   }
 

@@ -19,6 +19,7 @@ import { loginGuard } from './util';
 import { StockService } from './services/stock.service';
 import { PortfolioChartComponent } from './components/portfolio-chart.component';
 import { ResearchChartComponent } from './components/research-chart.component';
+import { ChartService } from './services/chart.service';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, title: 'Welcome to TradeSIMS' },
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     MainComponent,
     LoginComponent, 
     RegisterComponent, NavbarComponent, DashboardComponent, 
-    LeaderboardComponent, ResearchComponent, TradeComponent, PortfolioChartComponent, ResearchChartComponent
+    LeaderboardComponent, ResearchComponent, 
+    TradeComponent, PortfolioChartComponent, ResearchChartComponent
   ],
   imports: [
     BrowserModule, ReactiveFormsModule, FormsModule, HttpClientModule,
@@ -44,7 +46,7 @@ const appRoutes: Routes = [
     NgbModule,
   ],
   exports: [RouterModule],
-  providers: [AccountService, StockService],
+  providers: [AccountService, StockService, ResearchComponent, ChartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

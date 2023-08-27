@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Injectable, Input, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { LoginResponse, RegisterResponse, Stock, StockProfile, StockInfo } from 
 import { AccountService } from '../services/account.service';
 import { StockService } from '../services/stock.service';
 import { DashboardComponent } from './dashboard.component';
+
 
 @Component({
   selector: 'app-research',

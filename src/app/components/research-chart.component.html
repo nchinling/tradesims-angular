@@ -1,1 +1,107 @@
-<p>research-chart works!</p>
+<!-- <div class="row">
+
+<div class="col-md-6">
+<div class="chart-container" style="position: relative; height:50vh;">
+    <canvas  id="priceChart" class="chart-canvas" >{{ chart }}</canvas>
+
+    <p>Symbol: {{ symbol }}</p>
+
+    <form [formGroup]="chartForm" (submit)="processChart()">
+        <table>
+            <tr>
+                <td>Data points:&nbsp;</td>
+                <td style="padding-right: 10px;">
+                  <input type="number" formControlName="dataPoints">
+                </td>
+                <div>
+                  <span *ngIf="invalidField('dataPoints')" class="invalid-field">
+                    Min. of 1, max of 5000
+                  </span>
+                </div>
+                <td style="padding-left: 10px;">Interval:&nbsp;</td>
+                <td>
+                  <select formControlName="interval">
+                    <option value="1min">1 minute</option>
+                    <option value="5min">5 minute</option>
+                    <option value="15min">15 minute</option>
+                    <option value="1h">1 hour</option>
+                    <option value="1day">1 day</option>
+                  </select>
+                </td>
+                <td><button class="btn btn-success ml-5" type="submit" [disabled]="chartForm.invalid">Submit</button></td>
+              </tr><br>
+        </table>
+      </form>
+</div>
+</div>
+
+<div class="col-md-6">
+    <div class="chart-container" style="position: relative; height:30vh;">
+        <canvas  id="priceChart" class="chart-canvas" >{{ chart }}</canvas>
+    </div>
+</div>
+
+</div> -->
+
+
+
+
+<div class="chart-container" style="position: relative; height:70vh; width:80vw">
+    <canvas  id="priceChart" class="chart-canvas" >{{ chart }}</canvas>
+
+    <p>Symbol: {{ symbol }}</p>
+
+    <form [formGroup]="chartForm" (submit)="createChart()">
+        <table>
+            <tr>
+                <td>Data points:</td>
+                <td style="padding-right: 10px;">
+                  <input type="number" formControlName="dataPoints">
+                </td>
+                <div>
+                  <span *ngIf="invalidField('dataPoints')" class="invalid-field">
+                    Min. of 1, max of 5000
+                  </span>
+                </div>
+                <td style="padding-left: 10px;">Interval:&nbsp;</td>
+                <td>
+                  <select formControlName="interval">
+                    <option value="1min">1 minute</option>
+                    <option value="5min">5 minute</option>
+                    <option value="15min">15 minute</option>
+                    <option value="1h">1 hour</option>
+                    <option value="1day">1 day</option>
+                  </select>
+                </td>
+                <td>&nbsp;&nbsp;&nbsp;<button class="btn btn-success ml-5" type="submit" [disabled]="chartForm.invalid">Submit</button></td>
+                <!-- <td><button class="btn btn-primary" (click)="getTechnicalIndicator('bbands')" >Bollinger</button></td>&nbsp;
+                <td><button class="btn btn-custom-avgprice" (click)="getTechnicalIndicator('avgprice')" data-toggle="tooltip" data-placement="top" 
+                    title="Average Price(AVGPRICE) uses the formula: (open + high + low + close) / 4.">Avg. Price</button></td>&nbsp;
+                <td><button class="btn btn-custom-adx" (click)="getTechnicalIndicator('adx')" data-toggle="tooltip" data-placement="top" title="Average Directional Index(ADX) is used to decide if the price trend is strong.">ADX</button></td>&nbsp;
+                <td><button class="btn btn-custom-add" (click)="getTechnicalIndicator('add')" data-toggle="tooltip" data-placement="top" title="Composite of values of open and close time series.">ADD</button></td>&nbsp;
+                <td><button class="btn btn-custom-wma" (click)="getTechnicalIndicator('wma')" data-toggle="tooltip" data-placement="top" title="Weighted Moving Average(WMA) smooths out price fluctuations, and puts more weight on recent data points and less on past.">WMA</button></td>&nbsp;
+                <td><button class="btn btn-custom-wclprice" (click)="getTechnicalIndicator('wclprice')" data-toggle="tooltip" data-placement="top" 
+                    title="Weighted Close Price(WCLPRICE) is usually used as the base for other indicators for smoothness. Formula: (high + low + close * 2) / 4.">WCLPRICE</button></td>&nbsp; -->
+              </tr><br>
+            <tr>
+                <td colspan="12">
+                <button class="btn btn-primary" (click)="getTechnicalIndicator('bbands')" >Bollinger</button>&nbsp;&nbsp;
+                <button class="btn btn-custom-avgprice" (click)="getTechnicalIndicator('avgprice')" data-toggle="tooltip" data-placement="top" 
+                    title="Average Price(AVGPRICE) uses the formula: (open + high + low + close) / 4.">Avg. Price</button>&nbsp;&nbsp;
+                <button class="btn btn-custom-adx" (click)="getTechnicalIndicator('adx')" data-toggle="tooltip" data-placement="top" title="Average Directional Index(ADX) is used to decide if the price trend is strong.">ADX</button>&nbsp;&nbsp;
+                <button class="btn btn-custom-add" (click)="getTechnicalIndicator('add')" data-toggle="tooltip" data-placement="top" title="Composite of values of open and close time series.">ADD</button>&nbsp;&nbsp;
+                <button class="btn btn-custom-wma" (click)="getTechnicalIndicator('wma')" data-toggle="tooltip" data-placement="top" title="Weighted Moving Average(WMA) smooths out price fluctuations, and puts more weight on recent data points and less on past.">WMA</button>&nbsp;&nbsp;
+                <button class="btn btn-custom-wclprice" (click)="getTechnicalIndicator('wclprice')" data-toggle="tooltip" data-placement="top" 
+                    title="Weighted Close Price(WCLPRICE) is usually used as the base for other indicators for smoothness. Formula: (high + low + close * 2) / 4.">WCLPRICE</button>&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+        
+        <div class="zoom-buttons">
+            <button (click)="zoomIn()"> + </button>
+            <button (click)="zoomOut()"> - </button>
+        </div>
+     
+      </form>
+      
+</div>

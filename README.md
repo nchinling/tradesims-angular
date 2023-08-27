@@ -117,5 +117,11 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 
 27 Aug (Sun)
 - implement research charts
-- work on providing error messages
+- implemented first working technical indicator (bug free)
+- implemented zoom in and out function
+- implemented various technical indicators
+- implemented tooltips for buttons
 
+28 Aug (Mon)
+- add more chart indicators
+- implement another chart

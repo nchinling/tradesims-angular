@@ -138,3 +138,24 @@ export interface Stock{
     percent_change: number
     datetime: Date
 }
+
+
+export interface ChartInfo{
+    symbol: string
+    interval: string
+    datetime: Date[]
+    open: number[]
+    high: number[]
+    low: number[]
+    close: number[]
+
+}
+
+
+export interface ChartIndicatorData{
+    symbol: string
+    interval: string
+    datetime: Date[]
+    indicatorData: number[]
+
+}
