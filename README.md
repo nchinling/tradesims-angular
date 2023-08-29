@@ -125,3 +125,8 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 28 Aug (Mon)
 - add more chart indicators
 - implement another chart
+
+29 Aug (Tues)
+- fixed graph data order
+- fixed input symbol from dashboard component
+- looks very pretty. hooray!
