@@ -18,10 +18,12 @@ Chart.register(...registerables);
 export class ResearchChartComponent {
 
   chart$!: Observable<ChartInfo>
+  bottomChart$!: Observable<ChartInfo>
   symbol!:string
   dashboardSymbol!:string
  
   accountId!:string
+  canvasHeight: number = 130; 
   previousSymbol='AAPL'
   initialSymbol='AAPL'
   portfolioSymbols: string[] = [];
@@ -32,6 +34,7 @@ export class ResearchChartComponent {
   interval!: string
   dataPoints!:number
   datasets!:any
+  bottomDatasets!:any
   newDataPoints!:number
   previousDataPoints!:number
   averagePriceData: number[] = [];
@@ -39,16 +42,35 @@ export class ResearchChartComponent {
   wclprice: number[] = [];
   wma: number[] = [];
   add: number[] = [];
+  chaikin: number[]=[];
+  kama: number[]=[];
+  beta: number[]=[];
+  stdDev: number[]=[];
+  rsi: number[]=[];
+  mom: number[]=[];
+  linearReg: number[]=[];
+  ema: number[]=[];
 
 chart!:any
+bottomChart!:any
 counter=1;
 
+callTechnicalIndicators:boolean=false
 
   showAvgPrice: boolean = false;
   showADX: boolean = false;
   showADD: boolean = false;
   showWCLPrice: boolean = false;
   showWMA: boolean = false;
+  showChaikin: boolean = false;
+  showKama: boolean = false;
+  showBeta: boolean = false;
+  showStdDev: boolean = false;
+  showRSI: boolean = false;
+  showLinearReg: boolean = false;
+  showMom: boolean = false;
+  showEMA: boolean = false;
+  
 
   fb = inject(FormBuilder)
   stockSvc = inject(StockService)
@@ -61,7 +83,7 @@ counter=1;
     this.dashboardSymbol = this.stockSvc.symbol
    
    console.info("The symbol in ngOnInit of research chart is " + this.symbol )
-    // this.chart.destroy()
+
 
     console.info('the symbol in chart is: ' + this.symbol)
     this.chartForm = this.createForm()
@@ -72,24 +94,23 @@ counter=1;
       this.stock_name = data.stock_name;
     
       this.showAvgPrice = false
+      this.showKama = false
+      this.showChaikin = false
       this.showADX = false
       this.showWCLPrice= false
       this.showWMA = false
       this.showADD = false
+      this.showBeta = false
+      this.showStdDev = false
+      this.showRSI = false
+      this.showMom = false
+      this.showLinearReg = false
+      this.showEMA = false
       this.initialLoad=true
     this.processChart()
     })
     
   }
-
-  // loadPortfolioSymbols() {
-  //   const accountId = this.accSvc.account_id; 
-  //   this.stockSvc.getPortfolioSymbols(accountId).then((symbols) => {
-  //     this.portfolioSymbols = symbols;
-  //     console.info("The arrays in this.portfolioSymbols are " +this.portfolioSymbols)
-      
-  //   });
-  // }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
@@ -113,50 +134,72 @@ counter=1;
   }
 
   createChart(){
-    // this.chart.destroy()
     this.processChart()
   }
 
 
   private processChart(sameChart: boolean = false) {
   
-    // if (this.chart) {
-    //   this.chart.destroy();
-    // }
-    // if(!sameSymbol){
-    //   this.chart.destroy()
-    // }
-
     console.info('I am processing chart')
     console.info('this.symbol in processChart is' + this.symbol)
 
     this.interval = this.chartForm.get('interval')?.value ?? this.loadInterval;
     this.dataPoints = this.chartForm.get('dataPoints')?.value ?? 30;
-    //this.symbol = this.symbol !== '' ? this.symbol : this.initialChartSymbol;
 
     console.info("new: this.symbol is " + this.symbol)
     console.info("new: this.previousSymbol is " + this.previousSymbol)
     const sameSymbol = this.symbol === this.previousSymbol;
-    const sameDashbordSymbol = this.dashboardSymbol === this.previousSymbol
     const sameInterval = this.interval === this.loadInterval;
     const sameDataPoints = this.dataPoints === this.previousDataPoints;
-
     this.previousSymbol = this.symbol
+
+    if (!this.showAvgPrice) this.averagePriceData = [];
+    if (!this.showADX) this.adx = [];
+    if (!this.showKama) this.kama = [];
+    if (!this.showWCLPrice) this.wclprice = [];
+    if (!this.showWMA) this.wma = [];
+    if (!this.showADD) this.add = [];
+    if (!this.showKama) this.kama = [];
+    if (!this.showBeta) this.beta = [];
+    if (!this.showStdDev) this.stdDev = [];
+    if (!this.showRSI) this.rsi = [];
+    if (!this.showMom) this.mom = [];
+    if (!this.showLinearReg) this.linearReg = [];
+    if (!this.showEMA) this.ema = [];
 
     if (!sameChart) {
       if (!sameSymbol || !sameInterval || !sameDataPoints) {
+      // if (!sameSymbol) {
         this.showAvgPrice = false;
         this.showADX = false;
         this.showWCLPrice = false;
         this.showWMA = false;
         this.showADD = false;
+        this.showChaikin = false;
+        this.showKama = false;
+        this.showBeta = false;
+        this.showStdDev = false;
+        this.showRSI = false;
+        this.showMom = false;
+        this.showLinearReg = false;
+        this.showEMA = false;
       
       }
-        this.averagePriceData = [];
-        this.adx = [];
-        this.wclprice = [];
-        this.wma = [];
-        this.add = [];
+        // this.averagePriceData = [];
+        // this.adx = [];
+        // this.wclprice = [];
+        // this.wma = [];
+        // this.add = [];
+        // this.chaikin = [];
+        // this.kama = [];
+
+        // if (!this.showAvgPrice) this.averagePriceData = [];
+        // if (!this.showADX) this.adx = [];
+        // if (!this.showKama) this.kama = [];
+        // if (!this.showWCLPrice) this.wclprice = [];
+        // if (!this.showWMA) this.wma = [];
+        // if (!this.showADD) this.add = [];
+        // if (!this.showKama) this.kama = [];
     
     }
 
@@ -173,12 +216,8 @@ counter=1;
       console.info('dashboardSymbol in processingChart is: ' + this.dashboardSymbol)
       this.chart$.subscribe(chartData => {
 
-      
-        // const labels = chartData.datetime
         const labels = chartData.datetime.reverse()
-        console.info("chartData.close is " + chartData.close)
-
-        // console.info("chartData.close.reverse() is " + chartData.close.reverse() )
+        this.callTechnicalIndicators=true
 
         console.log('the labels are: '+ labels)
         this.datasets = [
@@ -186,8 +225,8 @@ counter=1;
           {
             label: 'Close',
             data: chartData.close.reverse(),
-            backgroundColor: 'blue',
-            borderColor:'blue',
+            backgroundColor: 'black',
+            borderColor:'black',
             borderWidth: 1,
             pointRadius: 0,
           },
@@ -196,6 +235,22 @@ counter=1;
             data: this.showAvgPrice? this.averagePriceData:'', 
             backgroundColor: 'red',
             borderColor: 'red',
+            borderWidth: 1.5,
+            pointRadius: 0,
+          },
+          {
+            label: 'EMA', 
+            data: this.showEMA? this.ema:'', 
+            backgroundColor: 'grey',
+            borderColor: 'grey',
+            borderWidth: 1.5,
+            pointRadius: 0,
+          },
+          {
+            label: 'KAMA', 
+            data: this.showKama? this.kama:'', 
+            backgroundColor: 'blue',
+            borderColor: 'blue',
             borderWidth: 1.5,
             pointRadius: 0,
           },
@@ -216,11 +271,24 @@ counter=1;
             pointRadius: 0,
           },
           {
-            label: 'ADX', 
-            data: this.showADX? this.adx:'', 
-            backgroundColor: 'orange',
-            borderColor: 'orange',
-            borderWidth: 1.5  ,
+            label: 'LinearReg', 
+            data: this.showLinearReg ?this.linearReg:'', 
+            backgroundColor: '#D61E68',
+            borderColor: '#D61E68',
+            borderWidth: 1.5,
+            pointRadius: 0,
+          },
+        
+        ];
+
+        this.bottomDatasets = [
+
+          {
+            label: 'Chaikin A/D',
+            data: this.showChaikin? this.chaikin:'', 
+            backgroundColor: '#2EC6EC',
+            borderColor:'#2EC6EC',
+            borderWidth: 1,
             pointRadius: 0,
           },
           {
@@ -231,16 +299,59 @@ counter=1;
             borderWidth: 1.5  ,
             pointRadius: 0,
           },
-        ];
+          {
+            label: 'ADX', 
+            data: this.showADX? this.adx:'', 
+            backgroundColor: 'orange',
+            borderColor: 'orange',
+            borderWidth: 1.5  ,
+            pointRadius: 0,
+          },
+          {
+            label: 'MOM', 
+            data: this.showMom? this.mom:'', 
+            backgroundColor: '#3B71CA',
+            borderColor: '#3B71CA',
+            borderWidth: 1.5  ,
+            pointRadius: 0,
+          },
+          {
+            label: 'RSI', 
+            data: this.showRSI? this.rsi:'', 
+            backgroundColor: 'mediumseagreen',
+            borderColor: 'mediumseagreen',
+            borderWidth: 1.5  ,
+            pointRadius: 0,
+          },
+          {
+            label: 'β', 
+            data: this.showBeta? this.beta:'', 
+            backgroundColor: 'green',
+            borderColor: 'green',
+            borderWidth: 1.5  ,
+            pointRadius: 0,
+          },
+          {
+            label: 'σ', 
+            data: this.showStdDev? this.stdDev:'', 
+            backgroundColor: 'brown',
+            borderColor: 'brown',
+            borderWidth: 1.5  ,
+            pointRadius: 0,
+          },
+        ]
 
        
-      
       if (sameChart) {
 
           console.info("the status of sameChart is " + sameChart)
           this.chart.data.labels = labels;
           this.chart.data.datasets = this.datasets;
           this.chart.update();
+
+          this.bottomChart.data.labels = labels;
+          this.bottomChart.data.datasets = this.bottomDatasets;
+          this.bottomChart.update();
           console.info("It is an update")
       } 
 
@@ -257,13 +368,44 @@ counter=1;
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              // x:{
-              //   display: false
-              // }
+              x: {
+                display: true, 
+                ticks: {
+                  autoSkip: true, 
+                  maxTicksLimit: 6, 
+                  
+                },
+              },
             },
             plugins:{
               title: {
                 display: true,
+                text: this.stock_name,
+                font:{
+                  size: 20
+                }
+              }
+            },
+          }
+        });
+
+        this.bottomChart = new Chart('bottomChart', {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: this.bottomDatasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x:{
+                display: false
+              }
+            },
+            plugins:{
+              title: {
+                display: false,
                 text: this.stock_name,
                 font:{
                   size: 20
@@ -279,11 +421,8 @@ counter=1;
 
         if((!sameSymbol || !sameInterval || !sameDataPoints&&(this.symbol!=this.initialSymbol))){
           this.chart.destroy()
+          this.bottomChart.destroy()
         }
-
-        // if ((this.dashboardSymbol || (!sameSymbol || !sameInterval || !sameDataPoints)) && this.symbol !== this.initialSymbol) {
-        //   this.chart.destroy();
-        // }
         
         this.initialSymbol='TEST'
 
@@ -299,9 +438,14 @@ counter=1;
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-              // x:{
-              //   display: false
-              // }
+              x: {
+                display: true, 
+                ticks: {
+                  autoSkip: true, 
+                  maxTicksLimit: 6, 
+                 
+                },
+              },
             },
             plugins:{
               title: {
@@ -315,85 +459,125 @@ counter=1;
           }
         });
 
-        
-      
-      
-      
-    }
+        this.bottomChart = new Chart('bottomChart', {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: this.bottomDatasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x:{
+                display: false
+              }
+            },
+            plugins:{
+              title: {
+                display: false,
+                text: this.stock_name,
+                font:{
+                  size: 20
+                }
+              }
+            },
+          }
+        });
 
 
+      }
     });
+
     
-      
+    
   }
-  
-
-  }
+}
 
 
-    getTechnicalIndicator(indicator:string) {
+  getTechnicalIndicator(indicator:string) {
 
-      this.interval = this.chartForm.get('interval')?.value ?? this.loadInterval;
-      this.dataPoints = this.chartForm.get('dataPoints')?.value ?? 30;
+    this.interval = this.chartForm.get('interval')?.value ?? this.loadInterval;
+    this.dataPoints = this.chartForm.get('dataPoints')?.value ?? 30;
 
-      this.loadInterval = this.interval
-      // this.previousSymbol = this.symbol
-      this.previousDataPoints = this.dataPoints
- 
-      this.chartSvc.getTechnicalIndicator(indicator,this.symbol, this.interval, this.dataPoints).subscribe((ChartIndicatorData) => {
-      
-        if(indicator=="avgprice"){
-        this.averagePriceData = ChartIndicatorData.indicatorData.reverse();
-        this.showAvgPrice = !this.showAvgPrice
-        this.showADX = false
-        this.showWCLPrice = false
-        this.showWMA = false
-        this.showADD = false
-        console.log('Average Price:', this.averagePriceData);
-        }
-        else if (indicator=="adx"){
-        this.adx = ChartIndicatorData.indicatorData.reverse();
-        this.showADX = !this.showADX
-        this.showAvgPrice=false;
-        this.showWCLPrice=false;
-        this.showWMA=false;
-        this.showADD = false
+    this.loadInterval = this.interval
+    // this.previousSymbol = this.symbol
+    this.previousDataPoints = this.dataPoints
+
+    this.chartSvc.getTechnicalIndicator(indicator,this.symbol, this.interval, this.dataPoints).subscribe((ChartIndicatorData) => {
+    
+      if(indicator=="avgprice"){
+      this.averagePriceData = ChartIndicatorData.indicatorData.reverse();
+      this.showAvgPrice = !this.showAvgPrice
+      console.log('Average Price:', this.averagePriceData);
+      }
+      else if (indicator=="adx"){
+      this.adx = ChartIndicatorData.indicatorData.reverse();
+      this.showADX = !this.showADX
+      console.log('ADX:', this.adx);
+      }
+      else if (indicator=="ema"){
+        this.ema = ChartIndicatorData.indicatorData.reverse();
+        this.showEMA = !this.showEMA
+        console.log('ema:', this.ema);
+      }
+      else if (indicator=="linearreg"){
+        this.linearReg = ChartIndicatorData.indicatorData.reverse();
+        this.showLinearReg = !this.showLinearReg
         console.log('ADX:', this.adx);
+      }
+      else if (indicator=="mom"){
+        this.mom = ChartIndicatorData.indicatorData.reverse();
+        this.showMom = !this.showMom
+        console.log('mom:', this.mom);
+      }
+      else if (indicator=="stddev"){
+        this.stdDev = ChartIndicatorData.indicatorData.reverse();
+        this.showStdDev = !this.showStdDev
+        console.log('stdDev:', this.stdDev);
+      }
+      else if (indicator=="rsi"){
+        this.rsi = ChartIndicatorData.indicatorData.reverse();
+        this.showRSI = !this.showRSI
+        console.log('rsi:', this.rsi);
+      }
+      else if (indicator=="kama"){
+        this.kama = ChartIndicatorData.indicatorData.reverse();
+        this.showKama = !this.showKama
+        console.log('Kama:', this.kama);
+      }
+      else if (indicator=="beta"){
+        this.beta = ChartIndicatorData.indicatorData.reverse();
+        this.showBeta = !this.showBeta
+        console.log('Beta:', this.beta);
+      }
+      else if (indicator=="adosc"){
+        this.chaikin = ChartIndicatorData.indicatorData.reverse();
+        this.showChaikin = !this.showChaikin
+        console.log('Chaikin:', this.chaikin);
         }
-        else if (indicator=="wclprice"){
-          this.wclprice = ChartIndicatorData.indicatorData.reverse();
-          this.showWCLPrice = !this.showWCLPrice
-          this.showADX=false;
-          this.showAvgPrice=false;
-          this.showWMA=false;
-          this.showADD = false
-          console.log('wclprice:', this.wclprice);
-        }
-        else if (indicator=="wma"){
-          this.wma = ChartIndicatorData.indicatorData.reverse();
-          this.showWMA = !this.showWMA
-          this.showADX=false;
-          this.showAvgPrice=false;
-          this.showWCLPrice=false;
-          this.showADD = false
-          console.log('wma:', this.wma);
-        }
-        else if(indicator=="add"){
-          this.add = ChartIndicatorData.indicatorData.reverse();
-          this.showADD = !this.showADD
-          this.showADX = false
-          this.showWCLPrice = false
-          this.showWMA = false
-          this.showAvgPrice = false
-          console.log('ADD:', this.add);
-        }
+      else if (indicator=="wclprice"){
+        this.wclprice = ChartIndicatorData.indicatorData.reverse();
+        this.showWCLPrice = !this.showWCLPrice
+        console.log('wclprice:', this.wclprice);
+      }
+      else if (indicator=="wma"){
+        this.wma = ChartIndicatorData.indicatorData.reverse();
+        this.showWMA = !this.showWMA
+        console.log('wma:', this.wma);
+      }
+      else if(indicator=="add"){
+        this.add = ChartIndicatorData.indicatorData.reverse();
+        this.showADD = !this.showADD
+        console.log('ADD:', this.add);
+      }
 
-        this.processChart(true);
-      });
-    }
-
+      this.processChart(true);
+    });
+  }
 
     zoomIn() {
+      console.info("I am inside zoomIn")
       const currentDataPoints = this.chartForm.get('dataPoints')?.value;
       const zoomFactor = 2; // You can adjust this value based on your desired zoom level.
       this.newDataPoints = Math.floor(currentDataPoints / zoomFactor);
@@ -403,25 +587,23 @@ counter=1;
     
       if (this.newDataPoints >= minDataPoints) {
         this.chartForm.get('dataPoints')?.setValue(this.newDataPoints);
-        // this.processChart(true);
       }
+  
     }
     
     zoomOut() {
+      console.info("I am inside zoomOut")
       const currentDataPoints = this.chartForm.get('dataPoints')?.value;
       const zoomFactor = 2; 
       this.newDataPoints = Math.floor(currentDataPoints * zoomFactor);
     
-      // Limit the maximum number of data points
+     
       const maxDataPoints = 5000; 
     
       if (this.newDataPoints <= maxDataPoints) {
         this.chartForm.get('dataPoints')?.setValue(this.newDataPoints);
-        // this.processChart(true);
       }
+   
     }
     
-
-    
-
 }

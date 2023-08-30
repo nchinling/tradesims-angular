@@ -111,7 +111,6 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 
 26 Aug (Sat)
 - enable 0% to be reflected
-
 - charts for charting 
 - charts for research
 
@@ -130,3 +129,8 @@ Some exciting implementations in Tradeus include charting, creation of watch lis
 - fixed graph data order
 - fixed input symbol from dashboard component
 - looks very pretty. hooray!
+
+30 Aug (Wed)
+- added another chart on different scale
+- added more indicators
+- implemented multiple switches

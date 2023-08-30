@@ -157,5 +157,4 @@ export interface ChartIndicatorData{
     interval: string
     datetime: Date[]
     indicatorData: number[]
-
 }

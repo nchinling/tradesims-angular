@@ -13,7 +13,7 @@
     position: absolute;
     top: 10px; /* Adjust the top position */
     right: 10px; /* Adjust the right position */
-    z-index: 1; /* Ensure the buttons appear over the chart */
+    z-index: 2; /* Ensure the buttons appear over the chart */
   }
   
   /* Style the buttons as needed */
@@ -52,6 +52,14 @@
   .btn-custom-avgprice:hover {
     background-color: #cc0000; /* Slightly darker red on hover */
   }
+  .btn-custom-kama {
+    background-color: blue;
+    color: white; /* Set the text color to contrast with the background */
+  }
+
+  .btn-custom-kama:hover {
+    background-color: rgb(2, 2, 83); /* Slightly darker color on hover */
+  }
 
   .btn-custom-wma {
     background-color: purple;
@@ -60,6 +68,14 @@
 
   .btn-custom-wma:hover {
     background-color: #660066; /* Slightly darker color on hover */
+  }
+  .btn-custom-ema {
+    background-color: grey;
+    color: white; /* Set the text color to contrast with the background */
+  }
+
+  .btn-custom-ema:hover {
+    background-color: rgb(84, 83, 83); /* Slightly darker color on hover */
   }
 
 
@@ -70,5 +86,44 @@
   .btn-custom-add:hover {
     background-color: rgb(132, 99, 104); /* Slightly darker color on hover */
   }
-  
+
+  .btn-custom-chaikin {
+    background-color: rgb(46, 198, 236);
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-chaikin:hover {
+    background-color:rgb(22, 89, 106); /* Slightly darker color on hover */
+  }
+
+  .btn-custom-beta {
+    background-color: green;
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-beta:hover {
+    background-color:darkolivegreen /* Slightly darker color on hover */
+  }
+
+  .btn-custom-sigma {
+    background-color:brown;
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-sigma:hover {
+    background-color:rgb(61, 16, 16); /* Slightly darker color on hover */
+  }
+
+  .btn-custom-rsi {
+    background-color:mediumseagreen;
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-rsi:hover {
+    background-color:rgb(25, 71, 46);; /* Slightly darker color on hover */
+  }
+
+  .btn-custom-linearreg {
+    background-color:rgb(214, 30, 104);
+    color: white; /* Set the text color to contrast with the background */
+  }
+  .btn-custom-linearreg:hover {
+    background-color:rgb(58, 9, 29); /* Slightly darker color on hover */
+  }
 
