@@ -28,7 +28,6 @@ export class ResearchChartComponent {
   initialSymbol='AAPL'
   portfolioSymbols: string[] = [];
   stock_name!:string
-  // chart!:any
   loadInterval: string = '1min'
   initialLoad=true
   interval!: string
@@ -185,22 +184,7 @@ callTechnicalIndicators:boolean=false
         this.showEMA = false;
       
       }
-        // this.averagePriceData = [];
-        // this.adx = [];
-        // this.wclprice = [];
-        // this.wma = [];
-        // this.add = [];
-        // this.chaikin = [];
-        // this.kama = [];
 
-        // if (!this.showAvgPrice) this.averagePriceData = [];
-        // if (!this.showADX) this.adx = [];
-        // if (!this.showKama) this.kama = [];
-        // if (!this.showWCLPrice) this.wclprice = [];
-        // if (!this.showWMA) this.wma = [];
-        // if (!this.showADD) this.add = [];
-        // if (!this.showKama) this.kama = [];
-    
     }
 
 

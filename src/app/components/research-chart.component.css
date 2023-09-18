@@ -3,11 +3,22 @@
 }
 
 /* CSS styles for the chart container */
+/* .chart-container {
+    position: relative;
+    width: 100%; 
+
+  } */
+
+  
 .chart-container {
     position: relative;
-    width: 100%; /* Adjust width as needed */
-  }
-  
+    width: 80vw;
+    height: auto; /* Remove fixed height to allow it to expand as needed */
+    display: flex;
+    flex-direction: column; /* Stack chart and form vertically */
+}
+
+
   /* CSS styles for the Zoom buttons */
   .zoom-buttons {
     position: absolute;

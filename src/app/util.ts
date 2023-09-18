@@ -13,7 +13,8 @@ export interface LeaveComponent {
       const router = inject(Router)
       const accountSvc = inject(AccountService)
   
-      if (accountSvc.hasLogin() || accountSvc.isAuthenticated())
+      // if (accountSvc.hasLogin() || accountSvc.isAuthenticated())
+      if (accountSvc.hasLogin())
           return true
       console.info('>>>>>hasLogin is >>>>>' +accountSvc.hasLogin())
       console.info('>>>>>isAuthenticated is >>>>>' +accountSvc.isAuthenticated())

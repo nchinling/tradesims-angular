@@ -12,7 +12,6 @@ import { AccountService } from './services/account.service';
 import { NavbarComponent } from './components/navbar.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LeaderboardComponent } from './components/leaderboard.component';
 import { ResearchComponent } from './components/research.component';
 import { TradeComponent } from './components/trade.component';
 import { loginGuard } from './util';
@@ -37,7 +36,7 @@ const appRoutes: Routes = [
     MainComponent,
     LoginComponent, 
     RegisterComponent, NavbarComponent, DashboardComponent, 
-    LeaderboardComponent, ResearchComponent, 
+    ResearchComponent, 
     TradeComponent, PortfolioChartComponent, ResearchChartComponent
   ],
   imports: [

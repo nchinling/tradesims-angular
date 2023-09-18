@@ -1,71 +1,63 @@
+<form [formGroup]="chartForm" (submit)="createChart()">
 <div class="chart-container" style="position: relative; height:80vh; width:80vw">
+
     <canvas  id="priceChart" class="chart-canvas" >{{ chart }}</canvas><br>
-    <br><br><br><br><br><br><br>
-    <form [formGroup]="chartForm" (submit)="createChart()">
-    <table>
-      <tr>
-          <td>Data points:</td>
-          <td style="padding-right: 10px;">
-            <input type="number" formControlName="dataPoints">
-          </td>
-          <div>
-            <span *ngIf="invalidField('dataPoints')" class="invalid-field">
-              Min. of 1, max of 5000
-            </span>
-          </div>
-          <td style="padding-left: 10px;">Interval:&nbsp;</td>
-          <td>
-            <select formControlName="interval">
-              <option value="1min">1 minute</option>
-              <option value="5min">5 minute</option>
-              <option value="15min">15 minute</option>
-              <option value="1h">1 hour</option>
-              <option value="1day">1 day</option>
-            </select>
-          </td>
-          <td>&nbsp;&nbsp;&nbsp;<button class="btn btn-success ml-5" type="submit" [disabled]="chartForm.invalid">Submit</button></td>
-        </tr><br>
-      </table>
-    <table>
-      <tr>
-          <td colspan="12">
-         
-          <button class="btn btn-custom-avgprice" (click)="getTechnicalIndicator('avgprice')" data-toggle="tooltip" data-placement="top" 
-              title="Average Price(AVGPRICE) uses the formula: (open + high + low + close) / 4.">Avg. Price</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-kama" (click)="getTechnicalIndicator('kama')" data-toggle="tooltip" data-placement="top" title="Kaufman's Adaptive Moving Average(KAMA) is a type of Moving Average(MA) that incorporates market noise and volatility.">KAMA</button>&nbsp;&nbsp;
-          <!-- <button class="btn btn-custom-adx" (click)="getTechnicalIndicator('adx')" data-toggle="tooltip" data-placement="top" title="Average Directional Index(ADX) is used to decide if the price trend is strong.">ADX</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-add" (click)="getTechnicalIndicator('add')" data-toggle="tooltip" data-placement="top" title="Composite of values of open and close time series.">ADD</button>&nbsp;&nbsp; -->
-          <button class="btn btn-custom-wma" (click)="getTechnicalIndicator('wma')" data-toggle="tooltip" data-placement="top" title="Weighted Moving Average(WMA) smooths out price fluctuations, and puts more weight on recent data points and less on past.">WMA</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-ema" (click)="getTechnicalIndicator('ema')" data-toggle="tooltip" data-placement="top" title="Exponential Moving Average(EMA) places greater importance on recent data points than the normal Moving Average(MA).">EMA</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-wclprice" (click)="getTechnicalIndicator('wclprice')" data-toggle="tooltip" data-placement="top" 
-              title="Weighted Close Price(WCLPRICE) is usually used as the base for other indicators for smoothness. Formula: (high + low + close * 2) / 4.">WCLPRICE</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-linearreg" (click)="getTechnicalIndicator('linearreg')" data-toggle="tooltip" data-placement="top" title="Linear Regression(LINEARREG) is used to determine trend direction by a straight line.">LinearReg</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-chaikin" (click)="getTechnicalIndicator('adosc')" data-toggle="tooltip" data-placement="top" title="Chaikin A/D Oscillator(ADOSC) finds the relationship between increasing and decreasing volume with price fluctuations.">Chaikin</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-rsi" (click)="getTechnicalIndicator('rsi')" data-toggle="tooltip" data-placement="top" title="Relative Strength Index(RSI) is a momentum indicator, which calculates the magnitude of a price change to assess the overbought and oversold conditions in the price of an asset.">RSI</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-adx" (click)="getTechnicalIndicator('adx')" data-toggle="tooltip" data-placement="top" title="Average Directional Index(ADX) is used to decide if the price trend is strong.">ADX</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-add" (click)="getTechnicalIndicator('add')" data-toggle="tooltip" data-placement="top" title="Composite of values of open and close time series.">ADD</button>&nbsp;&nbsp;
-          <button class="btn btn-primary" (click)="getTechnicalIndicator('mom')" data-toggle="tooltip" data-placement="top" title="Momentum(MOM) compares the current price with the previous price 9 timeperiods ago.">MOM</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-beta" (click)="getTechnicalIndicator('beta')" data-toggle="tooltip" data-placement="top" title="Beta is a concept that measures the expected move in a stock relative to movements in the overall market. A beta greater than 1.0 suggests that the stock is more volatile than the broader market, and a beta less than 1.0 indicates a stock with lower volatility">&beta;</button>&nbsp;&nbsp;
-          <button class="btn btn-custom-sigma" (click)="getTechnicalIndicator('stddev')" data-toggle="tooltip" data-placement="top" title="Standard Deviation(STDDEV) is used to measure volatility. This might be important when assessing risks.">&sigma;</button>&nbsp;&nbsp;
-          </td>
-      </tr>
-  </table>
-  
-   <div class="zoom-buttons">
+    <div class="zoom-buttons">
       <button (click)="zoomIn()"> + </button>
       <button (click)="zoomOut()"> - </button>
-  </div> 
-
-</form>
-
-    <!-- <div class="zoom-buttons">
-      <button (click)="zoomIn()"> + </button>
-      <button (click)="zoomOut()"> - </button>
-  </div> -->
+  </div>  
 </div>
 
 <div class="chart-container" style="position: relative; height:30vh; width:80vw">
     <canvas id="bottomChart" class="chart-canvas">{{ bottomChart }}</canvas>
-    <!-- <canvas *ngIf="showChaikin" id="bottomChart" class="chart-canvas" style="height: 400px;">{{ bottomChart }}</canvas> -->
 </div>
+<br>
+  <table>
+    <tr>
+        <td>Data point:</td>
+        <td style="padding-right: 10px;">
+          <input type="number" formControlName="dataPoints">
+        </td>
+        <div>
+          <span *ngIf="invalidField('dataPoints')" class="invalid-field">
+            Min. of 1, max of 5000
+          </span>
+        </div>
+        <td style="padding-left: 10px;">Interval:&nbsp;</td>
+        <td>
+          <select formControlName="interval">
+            <option value="1min">1 minute</option>
+            <option value="5min">5 minute</option>
+            <option value="15min">15 minute</option>
+            <option value="1h">1 hour</option>
+            <option value="1day">1 day</option>
+          </select>
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;<button class="btn btn-success ml-5" type="submit" [disabled]="chartForm.invalid">Submit</button></td>
+      </tr><br>
+    </table>
+  <table>
+    <tr>
+        <td colspan="12">
+       
+        <button class="btn btn-custom-avgprice" (click)="getTechnicalIndicator('avgprice')" data-toggle="tooltip" data-placement="top" 
+            title="Average Price(AVGPRICE) uses the formula: (open + high + low + close) / 4.">Avg. Price</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-kama" (click)="getTechnicalIndicator('kama')" data-toggle="tooltip" data-placement="top" title="Kaufman's Adaptive Moving Average(KAMA) is a type of Moving Average(MA) that incorporates market noise and volatility.">KAMA</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-wma" (click)="getTechnicalIndicator('wma')" data-toggle="tooltip" data-placement="top" title="Weighted Moving Average(WMA) smooths out price fluctuations, and puts more weight on recent data points and less on past.">WMA</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-ema" (click)="getTechnicalIndicator('ema')" data-toggle="tooltip" data-placement="top" title="Exponential Moving Average(EMA) places greater importance on recent data points than the normal Moving Average(MA).">EMA</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-wclprice" (click)="getTechnicalIndicator('wclprice')" data-toggle="tooltip" data-placement="top" 
+            title="Weighted Close Price(WCLPRICE) is usually used as the base for other indicators for smoothness. Formula: (high + low + close * 2) / 4.">WCLPRICE</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-linearreg" (click)="getTechnicalIndicator('linearreg')" data-toggle="tooltip" data-placement="top" title="Linear Regression(LINEARREG) is used to determine trend direction by a straight line.">LinearReg</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-chaikin" (click)="getTechnicalIndicator('adosc')" data-toggle="tooltip" data-placement="top" title="Chaikin A/D Oscillator(ADOSC) finds the relationship between increasing and decreasing volume with price fluctuations.">Chaikin</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-rsi" (click)="getTechnicalIndicator('rsi')" data-toggle="tooltip" data-placement="top" title="Relative Strength Index(RSI) is a momentum indicator, which calculates the magnitude of a price change to assess the overbought and oversold conditions in the price of an asset.">RSI</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-adx" (click)="getTechnicalIndicator('adx')" data-toggle="tooltip" data-placement="top" title="Average Directional Index(ADX) is used to decide if the price trend is strong.">ADX</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-add" (click)="getTechnicalIndicator('add')" data-toggle="tooltip" data-placement="top" title="Composite of values of open and close time series.">ADD</button>&nbsp;&nbsp;
+        <button class="btn btn-primary" (click)="getTechnicalIndicator('mom')" data-toggle="tooltip" data-placement="top" title="Momentum(MOM) compares the current price with the previous price 9 timeperiods ago.">MOM</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-beta" (click)="getTechnicalIndicator('beta')" data-toggle="tooltip" data-placement="top" title="Beta is a concept that measures the expected move in a stock relative to movements in the overall market. A beta greater than 1.0 suggests that the stock is more volatile than the broader market, and a beta less than 1.0 indicates a stock with lower volatility">&beta;</button>&nbsp;&nbsp;
+        <button class="btn btn-custom-sigma" (click)="getTechnicalIndicator('stddev')" data-toggle="tooltip" data-placement="top" title="Standard Deviation(STDDEV) is used to measure volatility. This might be important when assessing risks.">&sigma;</button>&nbsp;&nbsp;
+        </td>
+    </tr>
+</table>
+
+</form>
 <br>

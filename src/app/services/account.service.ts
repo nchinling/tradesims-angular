@@ -32,11 +32,20 @@ export class AccountService {
   key!: string
 
 
+  // hasLogin(): boolean {
+  //   if(this.username&&this.password)
+  //     localStorage.setItem(this.KEY, this.username)
+  //   //   const isLoggedIn = !!(this.username && this.password);
+  //     const isLoggedIn = true;
+  //     this.isLoggedInChanged.next(isLoggedIn);
+  //   return isLoggedIn;
+ 
+  // }
+
   hasLogin(): boolean {
     if(this.username&&this.password)
       localStorage.setItem(this.KEY, this.username)
-    //   const isLoggedIn = !!(this.username && this.password);
-      const isLoggedIn = true;
+      const isLoggedIn = !!(this.username && this.password);
       this.isLoggedInChanged.next(isLoggedIn);
     return isLoggedIn;
  
@@ -91,7 +100,7 @@ login(email: string, password: string): Observable<LoginResponse> {
         
         if (error instanceof HttpErrorResponse && error.status === 500) {
           const serverError = error.error.error; 
-          errorMessage = '>>>Server error: ' + serverError;
+          errorMessage = serverError;
         }
         
         this.onErrorMessage.next(errorMessage);

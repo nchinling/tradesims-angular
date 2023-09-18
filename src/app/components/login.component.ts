@@ -49,10 +49,6 @@ export class LoginComponent implements OnInit {
     this.accountSvc.password = password
     
 
-    //the username and password are passed to loginSvc for loginGuard
-    // this.accountSvc.username = username
-    // this.accountSvc.password = password
-  
     console.info('email: ', email)
     console.info('password: ', password)
 
@@ -71,12 +67,15 @@ export class LoginComponent implements OnInit {
       const queryParams = {
         account_id: response.account_id,
         username: response.username,
-        // timestamp: response.timestamp
+       
       };
 
     this.router.navigate(['/dashboard'], { queryParams: queryParams })
-
-   
+    }).catch((error)=>{
+    
+      this.errorMessage = error.error;
+      console.info('this.errorMessage is ' + this.errorMessage)
+  
     });
 
 
